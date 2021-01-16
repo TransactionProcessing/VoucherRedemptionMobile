@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:controls="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionVoucherDetailsPage">
+    <ContentPage.Content>
+        <StackLayout
+            Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                             PhoneLandscape='150,32',
+                                                             TabletPortrait='200,50',
+                                                             TabletLandscape='300,50',
+                                                             Desktop='30'}"
+            Spacing="0"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="{OnPlatform Default='-1',
+                                          UWP='350'}">
+            <Label
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource LabelStyle}"
+                Text="Voucher Details"
+                AutomationId="VoucherDetailsLabel"
+                TextColor="{DynamicResource Gray-900}" />
+
+            <StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Voucher Code" Style="{StaticResource HeaderLabelStyle}"/>
+
+                        <Label  Text="{Binding VoucherCode}" 
+                                Style="{StaticResource SmallLabelStyle}"
+                                VerticalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                x:Name="VoucherCodeLabel"
+                                AutomationId="VoucherCodeLabel"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Expiry Date: " Style="{StaticResource SmallLabelStyle}" WidthRequest="75"/>
+                        <Label x:Name="ExpiryDateLabel" AutomationId="ExpiryDateLabel" Text="{Binding ExpiryDate}" Style="{StaticResource SmallLabelStyle}"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Value: " Style="{StaticResource SmallLabelStyle}" WidthRequest="75"/>
+                        <Label x:Name="Value" Text="{Binding Value}" Style="{StaticResource SmallLabelStyle}"
+                               AutomationId="ValueLabel"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Balance: " Style="{StaticResource SmallLabelStyle}" WidthRequest="75"/>
+                        <Label x:Name="Balance" Text="{Binding Value}" Style="{StaticResource SmallLabelStyle}"
+                               AutomationId="BalanceLabel"/>
+                    </StackLayout>
+
+                </StackLayout>
+                <StackLayout>
+                    <BoxView Style="{StaticResource StandardBoxViewSeparatorLine}"/>
+                </StackLayout>
+            </StackLayout>
+
+            <buttons:SfButton
+                x:Name="RedeemVoucherButton"
+                Margin="0,16"
+                Style="{DynamicResource VoucherButtonStyle}"
+                Text="Redeem Voucher"
+                AutomationId="RedeemVoucherButton"/>
+
+            <buttons:SfButton
+                x:Name="CancelButton"
+                Margin="0,16"
+                Style="{DynamicResource VoucherButtonStyle}"
+                Text="Cancel"
+                AutomationId="CancelButton"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
