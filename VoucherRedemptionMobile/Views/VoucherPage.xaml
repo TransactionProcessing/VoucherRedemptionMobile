@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             x:Class="VoucherRedemptionMobile.Views.VoucherPage">
+
+    <ContentPage.Content>
+        <StackLayout
+            Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                             PhoneLandscape='150,32',
+                                                             TabletPortrait='200,50',
+                                                             TabletLandscape='300,50',
+                                                             Desktop='30'}"
+            Spacing="0"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="{OnPlatform Default='-1',
+                                          UWP='350'}">
+            <Label
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource LabelStyle}"
+                Text="Vouchers"
+                AutomationId="VoucherLabel"
+                TextColor="{DynamicResource Gray-900}" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <buttons:SfButton AutomationId="VoucherRedemptionButton" x:Name="VoucherRedemptionButton" Text="Redeem Voucher" Grid.Row="0" Grid.Column="0" Style="{DynamicResource VoucherButtonStyle}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+    

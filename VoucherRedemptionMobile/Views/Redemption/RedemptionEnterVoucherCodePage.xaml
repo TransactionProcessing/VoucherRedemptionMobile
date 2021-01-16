@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionEnterVoucherCodePage"
+             xmlns:controls="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
+             xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:converters="clr-namespace:VoucherRedemptionMobile.Converters;assembly=VoucherRedemptionMobile">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToColorConverter x:Key="ColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout
+            Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                             PhoneLandscape='150,32',
+                                                             TabletPortrait='200,50',
+                                                             TabletLandscape='300,50',
+                                                             Desktop='30'}"
+            Spacing="0"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="{OnPlatform Default='-1',
+                                          UWP='350'}">
+            <Label
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource LabelStyle}"
+                Text="Voucher Redemption"
+                AutomationId="VoucherRedemptionLabel"
+                TextColor="{DynamicResource Gray-900}" />
+
+            <border:SfBorder
+                BackgroundColor="{DynamicResource Gray-White}"
+                BorderColor="{Binding Source={x:Reference VoucherCodeEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                Style="{StaticResource SfBorderStyle}">
+                <controls:BorderlessEntry
+                    x:Name="VoucherCodeEntry"
+                    Placeholder="Voucher Code"
+                    PlaceholderColor="{DynamicResource Gray-700}"
+                    Style="{StaticResource EntryStyle}"
+                    Text="{Binding VoucherCode}"
+                    TextColor="{DynamicResource Gray-900}"
+                    AutomationId="VoucherCodeEntry"
+                    Keyboard="Numeric"/>
+            </border:SfBorder>
+
+            <buttons:SfButton
+                x:Name="FindVoucherButton"
+                Margin="0,16"
+                Style="{DynamicResource VoucherButtonStyle}"
+                Text="Find Voucher"
+                AutomationId="FindVoucherButton"/>
+
+            <buttons:SfButton
+                x:Name="CancelButton"
+                Margin="0,16"
+                Style="{DynamicResource VoucherButtonStyle}"
+                Text="Cancel"
+                AutomationId="CancelButton"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

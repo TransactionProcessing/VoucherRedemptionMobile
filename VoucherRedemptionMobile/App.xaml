@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:themes1="clr-namespace:VoucherRedemptionMobile.Themes;assembly=VoucherRedemptionMobile"
+             mc:Ignorable="d"
+             x:Class="VoucherRedemptionMobile.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <themes1:LightTheme />
+            </ResourceDictionary.MergedDictionaries >
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
