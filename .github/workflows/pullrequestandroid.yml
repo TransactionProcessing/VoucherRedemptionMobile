@@ -66,8 +66,8 @@ jobs:
     - name: Build Code     
       run: msbuild /p:Configuration="Release" /p:Platform="iPhoneSimulator" /t:Build VoucherRedemptionMobile.sln
 
-    - name: Run Unit Tests
-      run: mono $GITHUB_WORKSPACE/VoucherRedemptionMobile/packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.UnitTests/bin/Release/VoucherRedemptionMobile.UnitTests.dll
+    #- name: Run Unit Tests
+    #  run: mono $GITHUB_WORKSPACE/VoucherRedemptionMobile/packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.UnitTests/bin/Release/VoucherRedemptionMobile.UnitTests.dll
 
     - name: Build APK
       run: msbuild VoucherRedemptionMobile.Android/VoucherRedemptionMobile.Android.csproj -target:SignAndroidPackage /p:Configuration=Release  
