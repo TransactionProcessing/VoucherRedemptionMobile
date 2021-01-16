@@ -452,9 +452,7 @@
             }
 
             // Now build and return the container                
-            IContainerService builtContainer = voucherManagementAclContainer.Build().Start()
-                                                                            .WaitForPort($"{VoucherRedemptionMobileDockerHelper.VoucherManagementACLDockerPort}/tcp",
-                                                                                         30000);
+            IContainerService builtContainer = voucherManagementAclContainer.Build().Start();
 
             logger.LogInformation("Voucher Management ACL Container Started");
 
