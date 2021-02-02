@@ -1,4 +1,4 @@
-﻿namespace VoucherRedemptionMobile.Services
+﻿namespace VoucherRedemption.Clients
 {
     using System;
     using System.Threading;

@@ -1,17 +1,33 @@
-﻿namespace VoucherRedemptionMobile.Common
+﻿namespace VoucherRedemption.Clients
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Models;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// 
     /// </summary>
     /// <seealso cref="IConfiguration" />
     [ExcludeFromCodeCoverage]
-    public class Configuration : IConfiguration
+    public class DevelopmentConfiguration : IConfiguration
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DevelopmentConfiguration"/> class.
+        /// </summary>
+        public DevelopmentConfiguration()
+        {
+            this.VoucherManagementACL = "http://192.168.1.133:5008";
+            this.EstateManagement = "http://192.168.1.133:5000";
+            this.SecurityService = "http://192.168.1.133:5001";
+            this.ClientId = "mobileAppClient";
+            this.ClientSecret = "d192cbc46d834d0da90e8a9d50ded543";
+            this.LogLevel = LogLevel.Debug;
+            this.EnableAutoUpdates = false;
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -36,26 +52,14 @@
         /// <value>
         /// The security service.
         /// </value>
-        [JsonProperty("securityServiceUri")]
         public String SecurityService { get; set; }
 
-        [JsonProperty("voucherManagementACLUri")]
         public String VoucherManagementACL { get; set; }
 
-        /// <summary>
-        /// Gets or sets the log level.
-        /// </summary>
-        /// <value>
-        /// The log level.
-        /// </value>
+        public String EstateManagement { get; set; }
+
         public LogLevel LogLevel { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable automatic updates].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enable automatic updates]; otherwise, <c>false</c>.
-        /// </value>
         public Boolean EnableAutoUpdates { get; set; }
 
         #endregion

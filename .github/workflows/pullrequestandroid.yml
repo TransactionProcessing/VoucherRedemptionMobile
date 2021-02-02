@@ -16,39 +16,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2.3.4      
-          
-    - name: Create Docker VM
-      shell: bash
-      run: |
-        mkdir -p /Users/runner/.docker/machine/cache
-        curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
-        base=https://github.com/docker/machine/releases/download/v0.16.0 &&
-        curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/usr/local/bin/docker-machine &&
-        chmod +x /usr/local/bin/docker-machine
-        docker-machine create --driver virtualbox default
-        DOCKER_IP="$( docker-machine ip default )";
-        echo ::set-env name=localhostaddress::${DOCKER_IP}
-        mkdir -p /Users/runner/temp
-        curl -Lo ~/temp/docker-19.03.8.tgz  https://download.docker.com/mac/static/stable/x86_64/docker-19.03.8.tgz
-        tar xzvf /Users/runner/temp/docker-19.03.8.tgz
-        sudo cp docker/docker /usr/local/bin/    
-        docker-machine restart
-        eval $(docker-machine env default) 
-        docker info
-        docker network ls    
-        # Export variable (this target)
-        DOCKER_TLS_VERIFY="$(   docker-machine env default | grep DOCKER_TLS_VERIFY   | sed -e 's/.*="//g' -e 's/"$//g' )"
-        DOCKER_HOST="$(         docker-machine env default | grep DOCKER_HOST         | sed -e 's/.*="//g' -e 's/"$//g' )"
-        DOCKER_CERT_PATH="$(    docker-machine env default | grep DOCKER_CERT_PATH    | sed -e 's/.*="//g' -e 's/"$//g' )"
-        DOCKER_MACHINE_NAME="$( docker-machine env default | grep DOCKER_MACHINE_NAME | sed -e 's/.*="//g' -e 's/"$//g' )"
-        DOCKER_IP="$( docker-machine ip default )";
-        # Export variable (this other targets)
-        # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/development-tools-for-github-actions#set-an-environment-variable-set-env
-        echo ::set-env name=DOCKER_TLS_VERIFY::${DOCKER_TLS_VERIFY}
-        echo ::set-env name=DOCKER_HOST::${DOCKER_HOST}
-        echo ::set-env name=DOCKER_CERT_PATH::${DOCKER_CERT_PATH}
-        echo ::set-env name=DOCKER_MACHINE_NAME::${DOCKER_MACHINE_NAME}
-        echo ::set-env name=localhostaddress::${DOCKER_IP}        
    
     - uses: malinskiy/action-android/install-sdk@release/0.0.6
     - run: adb devices
@@ -89,8 +56,4 @@ jobs:
       with:
         name: screenshots
         path: /Users/runner/screenshots/**/*
-
-    #- name: Setup tmate session
-    #  if: failure()
-    #  uses: mxschmitt/action-tmate@v3
 

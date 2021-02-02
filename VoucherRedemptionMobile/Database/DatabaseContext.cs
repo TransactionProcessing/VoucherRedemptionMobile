@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Entities;
-    using Models;
     using SQLite;
+    using VoucherRedemption.Clients;
+    using LogMessage = Entities.LogMessage;
 
     /// <summary>
     /// 

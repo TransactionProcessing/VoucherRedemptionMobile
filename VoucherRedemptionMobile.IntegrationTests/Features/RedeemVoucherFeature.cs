@@ -11,7 +11,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.Features
     using Xamarin.UITest;
 
     [TestFixture(Platform.Android, Category = "Android")]
-    //[TestFixture(Platform.iOS, Category = "iOS")]
+    [TestFixture(Platform.iOS, Category = "iOS")]
     public partial class RedeemVoucherFeature : BaseTestFixture
     {
         public RedeemVoucherFeature(Platform platform)

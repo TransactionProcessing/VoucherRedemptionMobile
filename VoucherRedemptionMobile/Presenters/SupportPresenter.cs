@@ -7,10 +7,10 @@
     using System.Threading.Tasks;
     using Common;
     using Database;
-    using Database.Entities;
     using Pages;
-    using Services;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
+    using LogMessage = Database.Entities.LogMessage;
 
     /// <summary>
     /// 
@@ -94,7 +94,18 @@
                     break;
                 }
 
-                await this.ConfigurationServiceClient.PostDiagnosticLogs(this.Device.GetDeviceIdentifier(), logEntries, CancellationToken.None);
+                // TODO: Translate log messages
+                List<VoucherRedemption.Clients.LogMessage> logMessageModels = new List<VoucherRedemption.Clients.LogMessage>();
+
+                logEntries.ForEach(l => logMessageModels.Add(new VoucherRedemption.Clients.LogMessage
+                                                             {
+                                                                 LogLevel = l.LogLevel,
+                                                                 Message = l.Message,
+                                                                 EntryDateTime = l.EntryDateTime,
+                                                                 Id = l.Id
+                                                             }));
+
+                await this.ConfigurationServiceClient.PostDiagnosticLogs(this.Device.GetDeviceIdentifier(), logMessageModels, CancellationToken.None);
 
                 // Clear the logs that have been uploaded
                 await this.Database.RemoveUploadedMessages(logEntries);

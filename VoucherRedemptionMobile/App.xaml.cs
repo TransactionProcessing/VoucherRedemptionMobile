@@ -13,10 +13,11 @@
     using Plugin.Toast.Abstractions;
     using Presenters;
     using SecurityService.DataTransferObjects.Responses;
-    using Services;
     using StructureMap;
     using Syncfusion.Licensing;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
+    using IDevice = Common.IDevice;
 
     /// <summary>
     /// 
@@ -31,7 +32,8 @@
         /// The configuration
         /// </summary>
         public static IConfiguration Configuration;
-        
+
+        public static Boolean IsIntegrationTestMode;
         /// <summary>
         /// Unity container
         /// </summary>

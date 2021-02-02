@@ -64,21 +64,33 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             return deviceIdentifier;
         }
 
-        public static void SetConfiguration(String configHostAddress)
+        public static void SetIntegrationTestModeOn()
         {
             if (AppManager.platform == Platform.Android)
             {
-                AppManager.app.Invoke("SetConfiguration", configHostAddress);
+                AppManager.app.Invoke("SetIntegrationTestModeOn");
             }
             else if (AppManager.platform == Platform.iOS)
             {
-                AppManager.app.Invoke("SetConfiguration:", configHostAddress);
+                AppManager.app.Invoke("SetIntegrationTestModeOn:");
+            }
+        }
+
+        public static void AddTestVoucher(String voucherData)
+        {
+            // Build the voucher data
+            if (AppManager.platform == Platform.Android)
+            {
+                AppManager.app.Invoke("AddTestVoucher", voucherData);
+            }
+            else if (AppManager.platform == Platform.iOS)
+            {
+                AppManager.app.Invoke("AddTestVoucher:", voucherData);
             }
         }
 
         public static void StartApp()
         {
-
             String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             if (Platform == Platform.Android)
@@ -95,6 +107,8 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                                       .ApkFile(Path.Combine(binariesFolder, "com.transactionprocessing.voucherredemptionmobile.apk")).EnableLocalScreenshots().StartApp();
                 }
 
+                // Enable integration test mode
+                AppManager.SetIntegrationTestModeOn();
                 return;
             }
 
@@ -102,6 +116,8 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             {
                 String device = Environment.GetEnvironmentVariable("Device");
                 String deviceIdentifier = AppManager.GetDeviceIdentifier(device);
+                // Enable integration test mode
+                AppManager.SetIntegrationTestModeOn();
 
                 if (Debugger.IsAttached)
                 {
@@ -116,8 +132,11 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                                       .AppBundle(Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app")).DeviceIdentifier(deviceIdentifier)
                                       .StartApp();
                 }
+                
                 return;
             }
+
+            
         }
 
         /// <summary>

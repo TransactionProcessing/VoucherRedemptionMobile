@@ -9,9 +9,9 @@
     using Newtonsoft.Json;
     using Pages;
     using Plugin.Toast;
-    using Services;
     using ViewModels;
     using VoucherManagementACL.DataTransferObjects.Responses;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
 
     /// <summary>

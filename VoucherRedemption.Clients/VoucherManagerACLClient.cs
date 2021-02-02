@@ -1,4 +1,4 @@
-﻿namespace VoucherRedemptionMobile.Services
+﻿namespace VoucherRedemption.Clients
 {
     using System;
     using System.Net.Http;
@@ -12,8 +12,8 @@
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="ClientProxyBase.ClientProxyBase" />
-    /// <seealso cref="VoucherRedemptionMobile.Services.IVoucherManagerACLClient" />
+    /// <seealso cref="ClientProxyBase" />
+    /// <seealso cref="IVoucherManagerACLClient" />
     public class VoucherManagerACLClient : ClientProxyBase, IVoucherManagerACLClient
     {
         #region Fields

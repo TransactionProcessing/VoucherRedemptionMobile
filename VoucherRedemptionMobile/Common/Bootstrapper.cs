@@ -7,11 +7,12 @@
     using Pages;
     using Presenters;
     using SecurityService.Client;
-    using Services;
     using StructureMap;
+    using TestClients;
     using ViewModels;
     using Views;
     using Views.Redemption;
+    using VoucherRedemption.Clients;
 
     [ExcludeFromCodeCoverage]
     public class Bootstrapper
@@ -41,36 +42,48 @@
     {
         public ClientsRegistry()
         {
-            this.For<ISecurityServiceClient>().Use<SecurityServiceClient>().Singleton();
-            this.For<IConfigurationServiceClient>().Use<ConfigurationServiceClient>().Singleton();
-            this.For<IVoucherManagerACLClient>().Use<VoucherManagerACLClient>().Singleton();
-            this.For<HttpClient>().Add(new HttpClient());
-            this.For<Func<String, String>>().Add(new Func<String, String>(configSetting =>
-                                                                          {
-                                                                              if (configSetting == "ConfigServiceUrl")
-                                                                              {
-                                                                                  return "https://5r8nmm.deta.dev";
-                                                                              }
+            Console.WriteLine($"App.IsIntegrationTestMode is {App.IsIntegrationTestMode}");
 
-                                                                              if (App.Configuration != null)
-                                                                              {
-                                                                                  IConfiguration config = App.Configuration;
-                                                                                  
-                                                                                  if (configSetting == "SecurityService")
-                                                                                  {
-                                                                                      return config.SecurityService;
-                                                                                  }
+            if (App.IsIntegrationTestMode)
+            {
+                this.For<IConfigurationServiceClient>().Use<TestConfigurationServiceClient>().Singleton();
+                this.For<ISecurityServiceClient>().Use<TestSecurityServiceClient>().Singleton();
+                this.For<IVoucherManagerACLClient>().Use<TestVoucherManagementACLClient>().Singleton();
+            }
+            else
+            {
+                this.For<ISecurityServiceClient>().Use<SecurityServiceClient>().Singleton();
+                this.For<IConfigurationServiceClient>().Use<ConfigurationServiceClient>().Singleton();
+                this.For<IVoucherManagerACLClient>().Use<VoucherManagerACLClient>().Singleton();
 
-                                                                                  if (configSetting == "VoucherManagementACL")
-                                                                                  {
-                                                                                      return config.VoucherManagementACL;
-                                                                                  }
+                this.For<HttpClient>().Add(new HttpClient());
+                this.For<Func<String, String>>().Add(new Func<String, String>(configSetting =>
+                {
+                    if (configSetting == "ConfigServiceUrl")
+                    {
+                        return "https://5r8nmm.deta.dev";
+                    }
 
-                                                                                  return string.Empty;
-                                                                              }
+                    if (App.Configuration != null)
+                    {
+                        IConfiguration config = App.Configuration;
 
-                                                                              return string.Empty;
-                                                                          }));
+                        if (configSetting == "SecurityService")
+                        {
+                            return config.SecurityService;
+                        }
+
+                        if (configSetting == "VoucherManagementACL")
+                        {
+                            return config.VoucherManagementACL;
+                        }
+
+                        return string.Empty;
+                    }
+
+                    return string.Empty;
+                }));
+            }
         }
     }
 

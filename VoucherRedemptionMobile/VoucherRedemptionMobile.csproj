@@ -51,6 +51,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VoucherRedemption.Clients\VoucherRedemption.Clients.csproj" />
+    <ProjectReference Include="..\VoucherRedemption.IntegrationTestClients\VoucherRedemption.IntegrationTestClients.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Views\Redemption\RedemptionEnterVoucherCodePage.xaml.cs">
       <DependentUpon>RedemptionEnterVoucherCodePage.xaml</DependentUpon>
     </Compile>
@@ -87,5 +92,9 @@
     <EmbeddedResource Update="Views\Redemption\RedemptionEnterVoucherCodePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
