@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.4      
    
-    - uses: malinskiy/action-android/install-sdk@release/0.0.6
+    - uses: malinskiy/action-android/install-sdk@release/0.1.1
     - run: adb devices
     - run: echo $ANDROID_HOME
     - run: |
@@ -43,7 +43,7 @@ jobs:
       run: mkdir -p /Users/runner/screenshots
    
     - name: Run Integration Tests - Android
-      uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
+      uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
       with:
           cmd: mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.IntegrationTests/bin/Release/VoucherRedemptionMobile.IntegrationTests.dll --where "cat == Android&&cat == PRTest"
           api: 24

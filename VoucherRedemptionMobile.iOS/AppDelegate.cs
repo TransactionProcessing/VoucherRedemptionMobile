@@ -66,8 +66,9 @@
             AppDomain.CurrentDomain.UnhandledException += this.CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += this.TaskSchedulerOnUnobservedTaskException;
 
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
             this.Device = new iOSDevice();
-            //this.AnalysisLogger = new AppCenterAnalysisLogger();
+            this.Database = new DatabaseContext(connectionString);
 
             Forms.Init();
 
