@@ -19,11 +19,12 @@ jobs:
    
     - uses: malinskiy/action-android/install-sdk@release/0.1.1
     - run: sdkmanager platform-tools
+    - run: sdkmanager "build-tools;30.0.2"
     - run: adb devices
-    - run: echo $ANDROID_HOME
-    - run: |
-          cd $ANDROID_HOME/tools/bin
-          ./sdkmanager "build-tools;30.0.2"
+    #- run: echo $ANDROID_HOME
+    #- run: |
+    #      cd $ANDROID_HOME/tools/bin
+    #      ./sdkmanager "build-tools;30.0.2"
     
     - name: Setup Nuget
       uses: olegtarasov/download-nuget@v1
