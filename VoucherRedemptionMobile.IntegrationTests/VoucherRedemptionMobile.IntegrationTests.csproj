@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Xamarin.UITest.3.0.14\build\Xamarin.UITest.props" Condition="Exists('..\packages\Xamarin.UITest.3.0.14\build\Xamarin.UITest.props')" />
   <Import Project="..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props" Condition="Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props')" />
   <Import Project="..\packages\SpecFlow.NUnit.3.1.80\build\SpecFlow.NUnit.props" Condition="Exists('..\packages\SpecFlow.NUnit.3.1.80\build\SpecFlow.NUnit.props')" />
   <Import Project="..\packages\Shouldly.4.0.3\build\Shouldly.props" Condition="Exists('..\packages\Shouldly.4.0.3\build\Shouldly.props')" />
-  <Import Project="..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props" Condition="Exists('..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props')" />
   <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -181,8 +181,8 @@
     <Reference Include="VoucherManagementACL.DataTransferObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VoucherManagementACL.DataTransferObjects.1.0.0\lib\netstandard2.0\VoucherManagementACL.DataTransferObjects.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.UITest, Version=3.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.UITest.3.0.12\lib\net45\Xamarin.UITest.dll</HintPath>
+    <Reference Include="Xamarin.UITest, Version=3.0.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.UITest.3.0.14\lib\net45\Xamarin.UITest.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +224,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props'))" />
     <Error Condition="!Exists('..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets'))" />
     <Error Condition="!Exists('..\packages\Shouldly.4.0.3\build\Shouldly.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Shouldly.4.0.3\build\Shouldly.props'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.3.1.80\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.3.1.80\build\SpecFlow.targets'))" />
@@ -233,6 +232,7 @@
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.targets'))" />
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.UITest.3.0.14\build\Xamarin.UITest.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.UITest.3.0.14\build\Xamarin.UITest.props'))" />
   </Target>
   <Import Project="..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets" Condition="Exists('..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets')" />
   <Import Project="..\packages\SpecFlow.3.1.80\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.1.80\build\SpecFlow.targets')" />
