@@ -59,3 +59,10 @@ jobs:
         name: screenshots
         path: /Users/runner/screenshots/**/*
 
+    - name: Save logcat output
+      uses: actions/upload-artifact@master
+      if: failure()
+      with:
+        name: logcat
+        path: artifacts/logcat.log
+
