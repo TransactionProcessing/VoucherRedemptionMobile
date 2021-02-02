@@ -82,7 +82,7 @@
             return base.FinishedLaunching(app, options);
         }
 
-        [Export("SetIntegrationTestModeOn")]
+        [Export("SetIntegrationTestModeOn:")]
         public void SetIntegrationTestModeOn()
         {
             Console.WriteLine($"Inside SetIntegrationTestModeOn");
@@ -106,7 +106,7 @@
                                     });
         }
 
-        [Export("AddTestVoucher")]
+        [Export("AddTestVoucher:")]
         public void AddTestVoucher(String voucherData)
         {
             if (App.IsIntegrationTestMode == true)
