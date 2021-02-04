@@ -19,6 +19,7 @@
     using TransactionProcessorACL.DataTransferObjects;
     using TransactionProcessorACL.DataTransferObjects.Responses;
     using ViewModels;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
     using Timer = System.Timers.Timer;
 
@@ -104,7 +105,7 @@
         public async Task Start()
         {
             await this.Database.InsertLogMessage(DatabaseContext.CreateDebugLogMessage("In Start"));
-
+            
             this.LoginPage.LoginButtonClick += this.LoginPage_LoginButtonClick;
             this.LoginPage.SupportButtonClick += this.LoginPage_SupportButtonClick;
             this.LoginPage.Init(this.LoginViewModel);
@@ -128,8 +129,23 @@
         /// </summary>
         private async Task GetConfiguration()
         {
-            String config = JsonConvert.SerializeObject(App.Configuration);
-            await this.Database.InsertLogMessage(DatabaseContext.CreateInformationLogMessage(config));
+            // Get the application configuration here
+            try
+            {
+                Console.WriteLine("Config is null");
+                IConfigurationServiceClient configurationServiceClient = App.Container.GetInstance<IConfigurationServiceClient>();
+                App.Configuration = await configurationServiceClient.GetConfiguration(this.Device.GetDeviceIdentifier(), CancellationToken.None);
+                // TODO: Logging
+                Console.WriteLine("Config retrieved");
+
+                String config = JsonConvert.SerializeObject(App.Configuration);
+                await this.Database.InsertLogMessage(DatabaseContext.CreateInformationLogMessage(config));
+            }
+            catch (Exception ex)
+            {
+                // TODO: Handle this scenario better on CI :|
+                throw new ApplicationException("Error getting configuration for device!");
+            }
         }
 
         /// <summary>
@@ -149,9 +165,11 @@
                 await this.Database.InsertLogMessage(DatabaseContext.CreateDebugLogMessage("About to Get Configuration"));
                 await this.GetConfiguration();
 
-                await this.Database.InsertLogMessage(DatabaseContext.CreateDebugLogMessage($"About to Get Token for User [{this.LoginViewModel.EmailAddress} with Password [{this.LoginViewModel.Password}]]"));
-                
-                
+                await
+                    this.Database.InsertLogMessage(DatabaseContext
+                                                       .CreateDebugLogMessage($"About to Get Token for User [{this.LoginViewModel.EmailAddress} with Password [{this.LoginViewModel.Password}]]"));
+
+
                 // Attempt to login with the user details
                 TokenResponse tokenResponse = await securityServiceClient.GetToken(this.LoginViewModel.EmailAddress,
                                                                                    this.LoginViewModel.Password,
@@ -163,13 +181,18 @@
 
                 // Cache the user token
                 App.TokenResponse = tokenResponse;
-                
+
                 // Go to signed in page
                 this.MainPage.Init(this.MainPageViewModel);
                 this.MainPage.VoucherButtonClicked += this.MainPage_VoucherButtonClicked;
                 this.MainPage.SupportButtonClicked += this.MainPage_SupportButtonClicked;
 
                 Application.Current.MainPage = new NavigationPage((Page)this.MainPage);
+            }
+            catch(ApplicationException aex)
+            {
+                await this.Database.InsertLogMessages(DatabaseContext.CreateErrorLogMessages(aex));
+                CrossToastPopUp.Current.ShowToastWarning(aex.Message);
             }
             catch(Exception ex)
             {

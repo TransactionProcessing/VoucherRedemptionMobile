@@ -101,27 +101,27 @@
 
             App.Container.AssertConfigurationIsValid();
 
-            if (App.Configuration == null)
-            {
-                Task.Run(async () =>
-                         {
-                             try
-                             {
-                                 // TODO: Logging
-                                 Console.WriteLine("Config is null");
-                                 IConfigurationServiceClient configurationServiceClient = App.Container.GetInstance<IConfigurationServiceClient>();
-                                 App.Configuration = await configurationServiceClient.GetConfiguration(this.Device.GetDeviceIdentifier(), CancellationToken.None);
-                                 // TODO: Logging
-                                 Console.WriteLine("Config retrieved");
-                             }
-                             catch(Exception ex)
-                             {
-                                 // TODO: Handle this scenario better on CI :|
-                                 //CrossToastPopUp.Current.ShowToastWarning("Error retrieving configuration.", ToastLength.Long);
-                             }
-                         }).Wait();
+            //if (App.Configuration == null)
+            //{
+            //    Task.Run(async () =>
+            //             {
+            //                 try
+            //                 {
+            //                     // TODO: Logging
+            //                     Console.WriteLine("Config is null");
+            //                     IConfigurationServiceClient configurationServiceClient = App.Container.GetInstance<IConfigurationServiceClient>();
+            //                     App.Configuration = await configurationServiceClient.GetConfiguration(this.Device.GetDeviceIdentifier(), CancellationToken.None);
+            //                     // TODO: Logging
+            //                     Console.WriteLine("Config retrieved");
+            //                 }
+            //                 catch(Exception ex)
+            //                 {
+            //                     // TODO: Handle this scenario better on CI :|
+            //                     //CrossToastPopUp.Current.ShowToastWarning("Error retrieving configuration.", ToastLength.Long);
+            //                 }
+            //             }).Wait();
 
-            }
+            //}
         }
 
         #endregion
