@@ -115,9 +115,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             {
                 String device = Environment.GetEnvironmentVariable("Device");
                 String deviceIdentifier = AppManager.GetDeviceIdentifier(device);
-                // Enable integration test mode
-                AppManager.SetIntegrationTestModeOn();
-
+                
                 if (Debugger.IsAttached)
                 {
                     app = ConfigureApp.iOS.EnableLocalScreenshots().Debug().StartApp();
@@ -131,7 +129,10 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                                       .AppBundle(Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app")).DeviceIdentifier(deviceIdentifier)
                                       .StartApp();
                 }
-                
+
+                // Enable integration test mode
+                AppManager.SetIntegrationTestModeOn();
+
                 return;
             }
 

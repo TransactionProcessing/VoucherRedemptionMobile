@@ -86,25 +86,25 @@
         [Export("SetIntegrationTestModeOn:")]
         public void SetIntegrationTestModeOn(NSString input)
         {
-            //Console.WriteLine($"Inside SetIntegrationTestModeOn");
-            //App.IsIntegrationTestMode = true;
-            //App.Container.Configure((c) =>
-            //                        {
-            //                            c.For<IConfigurationServiceClient>().ClearAll();
-            //                            c.For<ISecurityServiceClient>().ClearAll();
-            //                            c.For<IEstateClient>().ClearAll();
-            //                            c.For<IVoucherManagerACLClient>().ClearAll();
-            //                        });
-            //App.Container = Bootstrapper.Run();
+            Console.WriteLine($"Inside SetIntegrationTestModeOn");
+            App.IsIntegrationTestMode = true;
+            App.Container.Configure((c) =>
+                                    {
+                                        c.For<IConfigurationServiceClient>().ClearAll();
+                                        c.For<ISecurityServiceClient>().ClearAll();
+                                        c.For<IEstateClient>().ClearAll();
+                                        c.For<IVoucherManagerACLClient>().ClearAll();
+                                    });
+            App.Container = Bootstrapper.Run();
 
-            //IDevice device = new iOSDevice();
-            //String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
-            //DatabaseContext database = new DatabaseContext(connectionString);
-            //App.Container.Configure((c) =>
-            //                        {
-            //                            c.For<IDevice>().Use(device).Transient();
-            //                            c.For<IDatabaseContext>().Use(database).Transient();
-            //                        });
+            IDevice device = new iOSDevice();
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
+            DatabaseContext database = new DatabaseContext(connectionString);
+            App.Container.Configure((c) =>
+                                    {
+                                        c.For<IDevice>().Use(device).Transient();
+                                        c.For<IDatabaseContext>().Use(database).Transient();
+                                    });
         }
 
         [Export("AddTestVoucher:")]
