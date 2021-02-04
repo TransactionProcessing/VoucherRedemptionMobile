@@ -13,7 +13,7 @@ jobs:
         ANDROID_HOME: "/Users/runner/Library/Android/sdk"
         ScreenshotFolder: "/Users/runner/screenshots"
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        Device: "iPhone 11 (13.7)"
+        Device: "iPhone 11 (14.3)"
     runs-on: macos-latest
 
     steps:
