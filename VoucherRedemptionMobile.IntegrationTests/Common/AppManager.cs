@@ -72,7 +72,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             }
             else if (AppManager.platform == Platform.iOS)
             {
-                AppManager.app.Invoke("SetIntegrationTestModeOn:", String.Empty);
+                AppManager.app.Invoke("SetIntegrationTestModeOn", String.Empty);
             }
         }
 
