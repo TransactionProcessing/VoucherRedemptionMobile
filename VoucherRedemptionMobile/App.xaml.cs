@@ -137,27 +137,27 @@
         protected override async void OnStart()
         {
             // TODO: Logging
-            //Console.WriteLine("In On Start");
+            Console.WriteLine("In On Start");
 
-            //if (App.Configuration != null)
-            //{
-            //    if (App.Configuration.EnableAutoUpdates)
-            //    {
-            //        Distribute.SetEnabledAsync(true).Wait();
-            //        Distribute.CheckForUpdate();
-            //    }
-            //    else
-            //    {
-            //        Distribute.DisableAutomaticCheckForUpdate();
-            //    }
+            if (App.Configuration != null)
+            {
+                if (App.Configuration.EnableAutoUpdates)
+                {
+                    Distribute.SetEnabledAsync(true).Wait();
+                    Distribute.CheckForUpdate();
+                }
+                else
+                {
+                    Distribute.DisableAutomaticCheckForUpdate();
+                }
 
-            //    Distribute.ReleaseAvailable = this.OnReleaseAvailable;
-            //    Distribute.UpdateTrack = UpdateTrack.Public;
+                Distribute.ReleaseAvailable = this.OnReleaseAvailable;
+                Distribute.UpdateTrack = UpdateTrack.Public;
 
-            //    AppCenter.Start("android=10210e06-8a11-422b-b005-14081dc56375;", typeof(Distribute));
-            //}
+                AppCenter.Start("android=10210e06-8a11-422b-b005-14081dc56375;", typeof(Distribute));
+            }
 
-            //App.TransactionNumber = 1;
+            App.TransactionNumber = 1;
 
             // Handle when your app starts
             ILoginPresenter loginPresenter = App.Container.GetInstance<ILoginPresenter>();
