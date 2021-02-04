@@ -154,9 +154,14 @@
         /// <returns></returns>
         public async Task<List<LogMessage>> GetLogMessages(Int32 batchSize)
         {
-            List<LogMessage> messages = await this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToListAsync();
+            if (this.Connection != null)
+            {
+                List<LogMessage> messages = await this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToListAsync();
 
-            return messages;
+                return messages;
+            }
+
+            return new List<LogMessage>();
         }
 
         /// <summary>
@@ -164,8 +169,11 @@
         /// </summary>
         public async Task InitialiseDatabase()
         {
-            // Create the required tables
-            await this.Connection.CreateTableAsync<LogMessage>();
+            if (this.Connection != null)
+            {
+                // Create the required tables
+                await this.Connection.CreateTableAsync<LogMessage>();
+            }
         }
 
         /// <summary>
@@ -174,12 +182,15 @@
         /// <param name="logMessage">The log message.</param>
         public async Task InsertLogMessage(LogMessage logMessage)
         {
-            Console.WriteLine(logMessage.Message);
-
-            LogLevel messageLevel = (LogLevel)Enum.Parse(typeof(LogLevel), logMessage.LogLevel, true);
-            if (App.Configuration == null || messageLevel <= App.Configuration.LogLevel)
+            if (this.Connection != null)
             {
-                await this.Connection.InsertAsync(logMessage);
+                Console.WriteLine(logMessage.Message);
+
+                LogLevel messageLevel = (LogLevel)Enum.Parse(typeof(LogLevel), logMessage.LogLevel, true);
+                if (App.Configuration == null || messageLevel <= App.Configuration.LogLevel)
+                {
+                    await this.Connection.InsertAsync(logMessage);
+                }
             }
         }
 
@@ -201,9 +212,12 @@
         /// <param name="logMessagesToRemove">The log messages to remove.</param>
         public async Task RemoveUploadedMessages(List<LogMessage> logMessagesToRemove)
         {
-            foreach (LogMessage logMessage in logMessagesToRemove)
+            if (this.Connection != null)
             {
-                await this.Connection.DeleteAsync(logMessage);
+                foreach (LogMessage logMessage in logMessagesToRemove)
+                {
+                    await this.Connection.DeleteAsync(logMessage);
+                }
             }
         }
         
