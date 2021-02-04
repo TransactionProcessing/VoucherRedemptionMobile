@@ -102,9 +102,8 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                 else
                 {
                     String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", @"VoucherRedemptionMobile.Android/bin/Release");
-                    app = ConfigureApp.Android
-                                      // Used to run a .apk file:
-                                      .ApkFile(Path.Combine(binariesFolder, "com.transactionprocessing.voucherredemptionmobile.apk")).EnableLocalScreenshots().StartApp();
+                    String apkPath = Path.Combine(binariesFolder, "com.transactionprocessing.voucherredemptionmobile.apk");
+                    app = ConfigureApp.Android.ApkFile(apkPath).EnableLocalScreenshots().Debug().StartApp();
                 }
 
                 // Enable integration test mode

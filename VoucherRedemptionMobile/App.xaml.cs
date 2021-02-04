@@ -116,7 +116,8 @@
                              }
                              catch(Exception ex)
                              {
-                                 CrossToastPopUp.Current.ShowToastWarning("Error retrieving configuration.", ToastLength.Long);
+                                 // TODO: Handle this scenario better on CI :|
+                                 //CrossToastPopUp.Current.ShowToastWarning("Error retrieving configuration.", ToastLength.Long);
                              }
                          }).Wait();
 
