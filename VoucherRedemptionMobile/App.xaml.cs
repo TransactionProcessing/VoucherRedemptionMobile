@@ -99,7 +99,7 @@
                                         c.For<IDatabaseContext>().Use(database).Transient();
                                     });
 
-            App.Container.AssertConfigurationIsValid();
+            //App.Container.AssertConfigurationIsValid();
         }
 
         #endregion
