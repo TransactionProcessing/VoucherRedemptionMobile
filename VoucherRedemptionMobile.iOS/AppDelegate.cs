@@ -84,7 +84,7 @@
         }
 
         [Export("SetIntegrationTestModeOn:")]
-        public void SetIntegrationTestModeOn()
+        public void SetIntegrationTestModeOn(NSString input)
         {
             Console.WriteLine($"Inside SetIntegrationTestModeOn");
             App.IsIntegrationTestMode = true;
@@ -108,7 +108,7 @@
         }
 
         [Export("AddTestVoucher:")]
-        public void AddTestVoucher(String voucherData)
+        public void AddTestVoucher(NSString voucherData)
         {
             if (App.IsIntegrationTestMode == true)
             {
