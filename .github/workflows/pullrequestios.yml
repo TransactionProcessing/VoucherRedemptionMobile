@@ -22,8 +22,8 @@ jobs:
     - name: Cache Simulator Data
       run: echo ::set-env name=IOSSIMULATORS::"$(xcrun simctl list devices --j | jq -c -j '.devices | to_entries[] | (.key | capture("com\\.apple\\.CoreSimulator\\.SimRuntime\\.iOS-(?<version>.+)")) as {$version} | .value[] | {name:"\(.name) (\($version|sub("-"; ".")))", udid}')"  
           
-    #- name: testing
-    #  run: xcrun instruments -s devices
+    - name: log out simulators
+      run: xcrun instruments -s devices
      
     - name: Setup Nuget
       uses: olegtarasov/download-nuget@v1
