@@ -18,7 +18,7 @@
         /// <summary>
         /// The connection
         /// </summary>
-        private readonly SQLiteAsyncConnection Connection;
+        private readonly SQLiteConnection Connection;
 
         #endregion
 
@@ -38,7 +38,7 @@
         /// <param name="connectionString">The connection string.</param>
         public DatabaseContext(String connectionString)
         {
-            this.Connection = new SQLiteAsyncConnection(connectionString);
+            this.Connection = new SQLiteConnection(connectionString);
         }
         #endregion
 
@@ -151,7 +151,7 @@
         {
             if (this.Connection != null)
             {
-                List<LogMessage> messages = await this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToListAsync();
+                List<LogMessage> messages = this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToList();
 
                 return messages;
             }
@@ -167,7 +167,7 @@
             if (this.Connection != null)
             {
                 // Create the required tables
-                await this.Connection.CreateTableAsync<LogMessage>();
+                this.Connection.CreateTable<LogMessage>();
             }
         }
 
@@ -184,7 +184,7 @@
                 LogLevel messageLevel = (LogLevel)Enum.Parse(typeof(LogLevel), logMessage.LogLevel, true);
                 if (App.Configuration == null || messageLevel <= App.Configuration.LogLevel)
                 {
-                    await this.Connection.InsertAsync(logMessage);
+                    this.Connection.Insert(logMessage);
                 }
             }
         }
@@ -211,7 +211,7 @@
             {
                 foreach (LogMessage logMessage in logMessagesToRemove)
                 {
-                    await this.Connection.DeleteAsync(logMessage);
+                    this.Connection.Delete(logMessage);
                 }
             }
         }
