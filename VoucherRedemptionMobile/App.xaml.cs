@@ -34,7 +34,11 @@
         /// </summary>
         public static IConfiguration Configuration;
 
+        /// <summary>
+        /// The is integration test mode
+        /// </summary>
         public static Boolean IsIntegrationTestMode;
+
         /// <summary>
         /// Unity container
         /// </summary>
@@ -44,22 +48,7 @@
         /// The token response
         /// </summary>
         public static TokenResponse TokenResponse;
-
-        /// <summary>
-        /// The estate identifier
-        /// </summary>
-        public static Guid EstateId;
-
-        /// <summary>
-        /// The merchant identifier
-        /// </summary>
-        public static Guid MerchantId;
-
-        /// <summary>
-        /// The transaction number
-        /// </summary>
-        private static Int32 TransactionNumber;
-
+        
         /// <summary>
         /// The database
         /// </summary>
@@ -154,9 +143,7 @@
 
                 AppCenter.Start("android=10210e06-8a11-422b-b005-14081dc56375;", typeof(Distribute));
             }
-
-            App.TransactionNumber = 1;
-
+            
             // Handle when your app starts
             ILoginPresenter loginPresenter = App.Container.Resolve<ILoginPresenter>();
             

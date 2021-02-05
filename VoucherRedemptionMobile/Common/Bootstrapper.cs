@@ -86,7 +86,7 @@
         {
             container.RegisterType<ILoginPresenter, LoginPresenter>(new TransientLifetimeManager());
             container.RegisterType<ISupportPresenter, SupportPresenter>(new TransientLifetimeManager());
-            container.RegisterType<IVoucherPresenter, IVoucherPresenter>(new TransientLifetimeManager());
+            container.RegisterType<IVoucherPresenter, VoucherPresenter>(new TransientLifetimeManager());
         }
 
         private static void RegisterViews(IUnityContainer container)
