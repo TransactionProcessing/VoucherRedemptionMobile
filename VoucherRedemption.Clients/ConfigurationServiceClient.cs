@@ -1,4 +1,4 @@
-﻿namespace VoucherRedemptionMobile.Services
+﻿namespace VoucherRedemption.Clients
 {
     using System;
     using System.Collections.Generic;
@@ -7,9 +7,6 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using ClientProxyBase;
-    using Common;
-    using Database.Entities;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -17,7 +14,7 @@
     /// </summary>
     /// <seealso cref="ClientProxyBase" />
     /// <seealso cref="IConfigurationServiceClient" />
-    public class ConfigurationServiceClient : ClientProxyBase, IConfigurationServiceClient
+    public class ConfigurationServiceClient : ClientProxyBase.ClientProxyBase, IConfigurationServiceClient
     {
         /// <summary>
         /// The base address resolver
@@ -130,5 +127,44 @@
             
             return await base.HandleResponse(responseMessage, cancellationToken);
         }
+    }
+
+    public class LogMessage
+    {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the entry date time.
+        /// </summary>
+        /// <value>
+        /// The entry date time.
+        /// </value>
+        public DateTime EntryDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public Int32 Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the log level.
+        /// </summary>
+        /// <value>
+        /// The log level.
+        /// </value>
+        public String LogLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>
+        /// The message.
+        /// </value>
+        public String Message { get; set; }
+
+        #endregion
     }
 }

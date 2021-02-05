@@ -15,8 +15,13 @@
     using EstateManagement.Client;
     using Java.Interop;
     using Microsoft.AppCenter.Distribute;
+    using Newtonsoft.Json;
     using SecurityService.Client;
-    using Services;
+    using TestClients;
+    using TestClients.Models;
+    using Unity;
+    using Unity.Lifetime;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.Android;
     using Environment = System.Environment;
@@ -72,48 +77,44 @@
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        /// <summary>
-        /// Sets the configuration.
-        /// </summary>
-        /// <param name="configurationHost">The configuration host.</param>
-        [Export("SetConfiguration")]
-        public void SetConfiguration(String configurationHost)
+        [Export("SetIntegrationTestModeOn")]
+        public void SetIntegrationTestModeOn()
         {
-            Console.WriteLine("In Set Configuration");
+            Console.WriteLine($"Inside SetIntegrationTestModeOn");
+            App.IsIntegrationTestMode = true;
+            //App.Container.Configure((c) =>
+            //                        {
+            //                            c.For<IConfigurationServiceClient>().ClearAll();
+            //                            c.For<ISecurityServiceClient>().ClearAll();
+            //                            c.For<IEstateClient>().ClearAll();
+            //                            c.For<IVoucherManagerACLClient>().ClearAll();
+            //                        });
+            App.Container = Bootstrapper.Run();
 
             IDevice device = new AndroidDevice();
-
-            String deviceId = device.GetDeviceIdentifier();
-
-            // Now get the configuration
-            Func<String, String> resolver = new Func<String, String>(configSetting => { return configurationHost; });
-
-            ConfigurationServiceClient configClient = new ConfigurationServiceClient(resolver, new HttpClient());
-
-            Task.Run(async () =>
-                     {
-                         App.Configuration = await configClient.GetConfiguration(deviceId, CancellationToken.None);
-                         App.Container.Configure((c) =>
-                                                 {
-                                                     c.For<ISecurityServiceClient>().ClearAll();
-                                                     c.For<IEstateClient>().ClearAll();
-                                                     c.For<IVoucherManagerACLClient>().ClearAll();
-                                                 });
-                         App.Container = Bootstrapper.Run();
-
-                         String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
-                         DatabaseContext database = new DatabaseContext(connectionString);
-                         App.Container.Configure((c) =>
-                                                 {
-                                                     c.For<IDevice>().Use(device).Transient();
-                                                     c.For<IDatabaseContext>().Use(database).Transient();
-                                                 });
-
-                     }).Wait();
-
-
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
+            DatabaseContext database = new DatabaseContext(connectionString);
+            //App.Container.Configure((c) =>
+            //                        {
+            //                            c.For<IDevice>().Use(device).Transient();
+            //                            c.For<IDatabaseContext>().Use(database).Transient();
+            //                        });
+            App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
+            App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
         }
 
+        [Export("AddTestVoucher")]
+        public void AddTestVoucher(String voucherData)
+        {
+            if (App.IsIntegrationTestMode == true)
+            {
+                Voucher voucher = JsonConvert.DeserializeObject<Voucher>(voucherData);
+                TestVoucherManagementACLClient voucherManagerAclClient = App.Container.Resolve<IVoucherManagerACLClient>() as TestVoucherManagementACLClient;
+                
+                voucherManagerAclClient.Vouchers.Add(voucher);
+            }
+        }
+        
         [Export("GetDeviceIdentifier")]
         public String GetDeviceIdentifier()
         {

@@ -1,7 +1,6 @@
-﻿namespace VoucherRedemptionMobile.Common
+﻿namespace VoucherRedemption.Clients
 {
     using System;
-    using Models;
 
     /// <summary>
     /// 

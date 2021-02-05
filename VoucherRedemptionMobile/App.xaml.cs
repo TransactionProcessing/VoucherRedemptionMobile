@@ -13,10 +13,12 @@
     using Plugin.Toast.Abstractions;
     using Presenters;
     using SecurityService.DataTransferObjects.Responses;
-    using Services;
-    using StructureMap;
     using Syncfusion.Licensing;
+    using Unity;
+    using Unity.Lifetime;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
+    using IDevice = Common.IDevice;
 
     /// <summary>
     /// 
@@ -31,32 +33,22 @@
         /// The configuration
         /// </summary>
         public static IConfiguration Configuration;
-        
+
+        /// <summary>
+        /// The is integration test mode
+        /// </summary>
+        public static Boolean IsIntegrationTestMode;
+
         /// <summary>
         /// Unity container
         /// </summary>
-        public static IContainer Container;
+        public static IUnityContainer Container;
 
         /// <summary>
         /// The token response
         /// </summary>
         public static TokenResponse TokenResponse;
-
-        /// <summary>
-        /// The estate identifier
-        /// </summary>
-        public static Guid EstateId;
-
-        /// <summary>
-        /// The merchant identifier
-        /// </summary>
-        public static Guid MerchantId;
-
-        /// <summary>
-        /// The transaction number
-        /// </summary>
-        private static Int32 TransactionNumber;
-
+        
         /// <summary>
         /// The database
         /// </summary>
@@ -79,6 +71,7 @@
         public App(IDevice device,
                    IDatabaseContext database)
         {
+            
             this.Device = device;
             this.Database = database;
 
@@ -91,34 +84,9 @@
 
             App.Container = Bootstrapper.Run();
 
-            App.Container.Configure((c) =>
-                                    {
-                                        c.For<IDevice>().Use(device).Transient();
-                                        c.For<IDatabaseContext>().Use(database).Transient();
-                                    });
+            App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
+            App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
 
-            App.Container.AssertConfigurationIsValid();
-
-            if (App.Configuration == null)
-            {
-                Task.Run(async () =>
-                         {
-                             try
-                             {
-                                 // TODO: Logging
-                                 Console.WriteLine("Config is null");
-                                 IConfigurationServiceClient configurationServiceClient = App.Container.GetInstance<IConfigurationServiceClient>();
-                                 App.Configuration = await configurationServiceClient.GetConfiguration(this.Device.GetDeviceIdentifier(), CancellationToken.None);
-                                 // TODO: Logging
-                                 Console.WriteLine("Config retrieved");
-                             }
-                             catch(Exception ex)
-                             {
-                                 CrossToastPopUp.Current.ShowToastWarning("Error retrieving configuration.", ToastLength.Long);
-                             }
-                         }).Wait();
-
-            }
         }
 
         #endregion
@@ -175,11 +143,9 @@
 
                 AppCenter.Start("android=10210e06-8a11-422b-b005-14081dc56375;", typeof(Distribute));
             }
-
-            App.TransactionNumber = 1;
-
+            
             // Handle when your app starts
-            ILoginPresenter loginPresenter = App.Container.GetInstance<ILoginPresenter>();
+            ILoginPresenter loginPresenter = App.Container.Resolve<ILoginPresenter>();
             
             // show the login page
             await loginPresenter.Start();

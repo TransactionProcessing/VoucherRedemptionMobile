@@ -2,16 +2,20 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq.Expressions;
     using System.Net.Http;
+    using System.Runtime.CompilerServices;
     using EstateManagement.Client;
     using Pages;
     using Presenters;
     using SecurityService.Client;
-    using Services;
-    using StructureMap;
+    using TestClients;
+    using Unity;
+    using Unity.Lifetime;
     using ViewModels;
     using Views;
     using Views.Redemption;
+    using VoucherRedemption.Clients;
 
     [ExcludeFromCodeCoverage]
     public class Bootstrapper
@@ -22,96 +26,94 @@
         /// Runs this instance.
         /// </summary>
         /// <returns></returns>
-        public static IContainer Run()
+        public static IUnityContainer Run()
         {
-            Registry registry = new Registry();
-            registry.IncludeRegistry<ClientsRegistry>();
-            registry.IncludeRegistry<PresenterRegistry>();
-            registry.IncludeRegistry<ViewRegistry>();
-            registry.IncludeRegistry<ViewModelRegistry>();
-            IContainer container = new Container(registry);
+            IUnityContainer container = new UnityContainer();
+            
+            Bootstrapper.RegisterClients(container);
+            Bootstrapper.RegisterPresenters(container);
+            Bootstrapper.RegisterViews(container);
+            Bootstrapper.RegisterViewModels(container);
             
             return container;
         }
 
-        #endregion
-    }
-
-    public class ClientsRegistry : Registry
-    {
-        public ClientsRegistry()
+        private static void RegisterClients(IUnityContainer container)
         {
-            this.For<ISecurityServiceClient>().Use<SecurityServiceClient>().Singleton();
-            this.For<IConfigurationServiceClient>().Use<ConfigurationServiceClient>().Singleton();
-            this.For<IVoucherManagerACLClient>().Use<VoucherManagerACLClient>().Singleton();
-            this.For<HttpClient>().Add(new HttpClient());
-            this.For<Func<String, String>>().Add(new Func<String, String>(configSetting =>
-                                                                          {
-                                                                              if (configSetting == "ConfigServiceUrl")
+            if (App.IsIntegrationTestMode)
+            {
+                container.RegisterSingleton<IConfigurationServiceClient, TestConfigurationServiceClient>();
+                container.RegisterSingleton<ISecurityServiceClient, TestSecurityServiceClient>();
+                container.RegisterSingleton<IVoucherManagerACLClient, TestVoucherManagementACLClient>();
+            }
+            else
+            {
+                container.RegisterSingleton<IConfigurationServiceClient, ConfigurationServiceClient>();
+                container.RegisterSingleton<ISecurityServiceClient, SecurityServiceClient>();
+                container.RegisterSingleton<IVoucherManagerACLClient, VoucherManagerACLClient>();
+                container.RegisterInstance(new HttpClient());
+                container.RegisterInstance<Func<String, String>>(
+                new Func<String, String>(configSetting =>
                                                                               {
-                                                                                  return "https://5r8nmm.deta.dev";
-                                                                              }
-
-                                                                              if (App.Configuration != null)
-                                                                              {
-                                                                                  IConfiguration config = App.Configuration;
-                                                                                  
-                                                                                  if (configSetting == "SecurityService")
+                                                                                  if (configSetting == "ConfigServiceUrl")
                                                                                   {
-                                                                                      return config.SecurityService;
+                                                                                      return "https://5r8nmm.deta.dev";
                                                                                   }
 
-                                                                                  if (configSetting == "VoucherManagementACL")
+                                                                                  if (App.Configuration != null)
                                                                                   {
-                                                                                      return config.VoucherManagementACL;
+                                                                                      IConfiguration config = App.Configuration;
+                                                                                      
+                                                                                      if (configSetting == "SecurityService")
+                                                                                      {
+                                                                                          return config.SecurityService;
+                                                                                      }
+
+                                                                                      if (configSetting == "VoucherManagementACL")
+                                                                                      {
+                                                                                          return config.VoucherManagementACL;
+                                                                                      }
+
+                                                                                      return string.Empty;
                                                                                   }
 
                                                                                   return string.Empty;
-                                                                              }
-
-                                                                              return string.Empty;
-                                                                          }));
+                                                                              }));
+            }
         }
-    }
 
-    public class PresenterRegistry : Registry
-    {
-        public PresenterRegistry()
+        private static void RegisterPresenters(IUnityContainer container)
         {
-            this.For<ILoginPresenter>().Add<LoginPresenter>().Transient();
-            this.For<ISupportPresenter>().Add<SupportPresenter>().Transient();
-            this.For<IVoucherPresenter>().Add<VoucherPresenter>().Transient();
+            container.RegisterType<ILoginPresenter, LoginPresenter>(new TransientLifetimeManager());
+            container.RegisterType<ISupportPresenter, SupportPresenter>(new TransientLifetimeManager());
+            container.RegisterType<IVoucherPresenter, VoucherPresenter>(new TransientLifetimeManager());
         }
-    }
-    public class ViewRegistry : Registry
-    {
-        public ViewRegistry()
+
+        private static void RegisterViews(IUnityContainer container)
         {
             // General
-            this.For<IMainPage>().Use<MainPage>().Transient();
-            this.For<ILoginPage>().Use<LoginPage>().Transient();
+            container.RegisterType<IMainPage, MainPage>(new TransientLifetimeManager());
+            container.RegisterType<ILoginPage, LoginPage>(new TransientLifetimeManager());
 
             // Support
-            this.For<ISupportPage>().Use<SupportPage>().Transient();
+            container.RegisterType<ISupportPage, SupportPage>(new TransientLifetimeManager());
 
             // Voucher
-            this.For<IVoucherPage>().Use<VoucherPage>().Transient();
-            this.For<IRedemptionEnterVoucherCodePage>().Use<RedemptionEnterVoucherCodePage>().Transient();
-            this.For<IRedemptionVoucherDetailsPage>().Use<RedemptionVoucherDetailsPage>().Transient();
-            this.For<IRedemptionSuccessPage>().Use<RedemptionSuccessPage>().Transient();
-            this.For<IRedemptionFailedPage>().Use<RedemptionFailedPage>().Transient();
+            container.RegisterType<IVoucherPage, VoucherPage>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionEnterVoucherCodePage, RedemptionEnterVoucherCodePage>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionVoucherDetailsPage, RedemptionVoucherDetailsPage>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionSuccessPage, RedemptionSuccessPage>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionFailedPage, RedemptionFailedPage>(new TransientLifetimeManager());
         }
-    }
 
-    public class ViewModelRegistry : Registry
-    {
-        public ViewModelRegistry()
+        private static void RegisterViewModels(IUnityContainer container)
         {
-            // General
-            this.For<LoginViewModel>().Transient();
-            this.For<MainPageViewModel>().Transient();
-            this.For<RedemptionEnterVoucherCodeViewModel>().Transient();
-            this.For<RedemptionVoucherDetailsViewModel>().Transient();
+            container.RegisterType<LoginViewModel>(new TransientLifetimeManager());
+            container.RegisterType<MainPageViewModel>(new TransientLifetimeManager());
+            container.RegisterType<RedemptionEnterVoucherCodeViewModel>(new TransientLifetimeManager());
+            container.RegisterType<RedemptionEnterVoucherCodeViewModel>(new TransientLifetimeManager());
         }
+
+        #endregion
     }
 }

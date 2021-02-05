@@ -29,7 +29,7 @@
         /// <returns></returns>
         public String GetSoftwareVersion()
         {
-            return null;
+            return String.Empty;
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿namespace VoucherRedemptionMobile.Models
+﻿namespace VoucherRedemption.Clients
 {
     /// <summary>
     /// 

@@ -1,11 +1,9 @@
-﻿namespace VoucherRedemptionMobile.Services
+﻿namespace VoucherRedemption.Clients
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Common;
-    using Database.Entities;
 
     /// <summary>
     /// 

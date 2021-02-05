@@ -1,14 +1,24 @@
 ﻿namespace VoucherRedemptionMobile.iOS
 {
     using System;
+    using System.IO;
     using System.Threading.Tasks;
+    using Database;
+    using EstateManagement.Client;
     using Foundation;
+    using Newtonsoft.Json;
+    using SecurityService.Client;
     using Syncfusion.XForms.iOS.Border;
     using Syncfusion.XForms.iOS.Buttons;
     using Syncfusion.XForms.iOS.TabView;
+    using TestClients;
     using UIKit;
+    using Unity;
+    using Unity.Lifetime;
+    using VoucherRedemption.Clients;
     using VoucherRedemptionMobile;
     using VoucherRedemptionMobile.Common;
+    using VoucherRedemptionMobile.TestClients.Models;
     using Xamarin;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.iOS;
@@ -24,11 +34,11 @@
     public class AppDelegate : FormsApplicationDelegate
     {
         #region Fields
-        
+
         /// <summary>
-        /// The configuration
+        /// The logging database
         /// </summary>
-        private IConfiguration Configuration;
+        private IDatabaseContext Database;
 
         /// <summary>
         /// The device
@@ -58,8 +68,9 @@
             AppDomain.CurrentDomain.UnhandledException += this.CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += this.TaskSchedulerOnUnobservedTaskException;
 
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "TransactionProcessing.db");
             this.Device = new iOSDevice();
-            //this.AnalysisLogger = new AppCenterAnalysisLogger();
+            this.Database = new DatabaseContext(connectionString);
 
             Forms.Init();
 
@@ -69,30 +80,36 @@
             SfButtonRenderer.Init();
             SfTabViewRenderer.Init();
 
-            // TODO: fix this
-            //this.LoadApplication(new App(this.Device, this.AnalysisLogger));
+            this.LoadApplication(new App(this.Device, this.Database));
 
             return base.FinishedLaunching(app, options);
         }
 
-        /// <summary>
-        /// Sets the configuration.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        [Export("SetConfiguration:")]
-        public void SetConfiguration(NSString configuration)
+        [Export("SetIntegrationTestModeOn:")]
+        public void SetIntegrationTestModeOn(NSString input)
         {
-            //String[] configItems = configuration.ToString().Split(',');
-            //Configuration configurationObject = new Configuration
-            //                                    {
-            //                                        ClientId = configItems[0],
-            //                                        ClientSecret = configItems[1],
-            //                                        SecurityService = configItems[2],
-            //                                        TransactionProcessorACL = configItems[3],
-            //                                        EstateManagement = configItems[4]
-            //};
+            Console.WriteLine($"Inside SetIntegrationTestModeOn");
+            App.IsIntegrationTestMode = true;
+            App.Container = Bootstrapper.Run();
 
-            //App.Configuration = configurationObject;
+            IDevice device = new iOSDevice();
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
+            DatabaseContext database = new DatabaseContext(connectionString);
+            
+            App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
+            App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
+        }
+
+        [Export("AddTestVoucher:")]
+        public void AddTestVoucher(NSString voucherData)
+        {
+            if (App.IsIntegrationTestMode == true)
+            {
+                Voucher voucher = JsonConvert.DeserializeObject<Voucher>(voucherData);
+                TestVoucherManagementACLClient voucherManagerAclClient = App.Container.Resolve<IVoucherManagerACLClient>() as TestVoucherManagementACLClient;
+
+                voucherManagerAclClient.Vouchers.Add(voucher);
+            }
         }
 
         /// <summary>

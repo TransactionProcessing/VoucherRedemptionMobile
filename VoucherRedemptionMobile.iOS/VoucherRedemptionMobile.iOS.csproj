@@ -9,11 +9,12 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TransactionMobile.iOS</RootNamespace>
+    <RootNamespace>VoucherRedemptionMobile.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>TransactionMobile.iOS</AssemblyName>
+    <AssemblyName>VoucherRedemptionMobile.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <ProvisioningType>automatic</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -180,9 +181,22 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\VoucherRedemption.Clients\VoucherRedemption.Clients.csproj">
+      <Project>{472f9880-e2ce-4f04-8ec7-f062203cfa3a}</Project>
+      <Name>VoucherRedemption.Clients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoucherRedemption.IntegrationTestClients\VoucherRedemption.IntegrationTestClients.csproj">
+      <Project>{906bc43c-045f-4217-8130-6039a63fe05b}</Project>
+      <Name>VoucherRedemption.IntegrationTestClients</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VoucherRedemptionMobile\VoucherRedemptionMobile.csproj">
       <Project>{ac489537-0f82-433c-911f-ab4715010bdb}</Project>
       <Name>VoucherRedemptionMobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

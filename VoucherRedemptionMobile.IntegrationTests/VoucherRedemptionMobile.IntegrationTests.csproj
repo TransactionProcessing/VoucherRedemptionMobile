@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Xamarin.UITest.3.0.13\build\Xamarin.UITest.props" Condition="Exists('..\packages\Xamarin.UITest.3.0.13\build\Xamarin.UITest.props')" />
   <Import Project="..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props" Condition="Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props')" />
   <Import Project="..\packages\SpecFlow.NUnit.3.1.80\build\SpecFlow.NUnit.props" Condition="Exists('..\packages\SpecFlow.NUnit.3.1.80\build\SpecFlow.NUnit.props')" />
   <Import Project="..\packages\Shouldly.4.0.3\build\Shouldly.props" Condition="Exists('..\packages\Shouldly.4.0.3\build\Shouldly.props')" />
-  <Import Project="..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props" Condition="Exists('..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props')" />
   <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -178,26 +178,17 @@
     <Reference Include="Utf8Json, Version=1.3.7.0, Culture=neutral, PublicKeyToken=8a73d3ba7e392e27, processorArchitecture=MSIL">
       <HintPath>..\packages\Utf8Json.1.3.7\lib\net47\Utf8Json.dll</HintPath>
     </Reference>
-    <Reference Include="VoucherManagement.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VoucherManagement.Client.1.0.0.6\lib\netstandard2.0\VoucherManagement.Client.dll</HintPath>
+    <Reference Include="VoucherManagementACL.DataTransferObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VoucherManagementACL.DataTransferObjects.1.0.0\lib\netstandard2.0\VoucherManagementACL.DataTransferObjects.dll</HintPath>
     </Reference>
-    <Reference Include="VoucherManagement.DataTransferObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VoucherManagement.Client.1.0.0.6\lib\netstandard2.0\VoucherManagement.DataTransferObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.UITest, Version=3.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.UITest.3.0.12\lib\net45\Xamarin.UITest.dll</HintPath>
+    <Reference Include="Xamarin.UITest, Version=3.0.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.UITest.3.0.13\lib\net45\Xamarin.UITest.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSteps.cs" />
     <Compile Include="Common\AppManager.cs" />
-    <Compile Include="Common\ClientDetails.cs" />
-    <Compile Include="Common\EstateDetails.cs" />
-    <Compile Include="Common\EventStoreHttp.cs" />
-    <Compile Include="Common\ILogger.cs" />
     <Compile Include="Common\SpecflowTableHelper.cs" />
-    <Compile Include="Common\TestingContext.cs" />
-    <Compile Include="Common\VoucherRedemptionMobileDockerHelper.cs" />
     <Compile Include="Features\LoginSteps.cs" />
     <Compile Include="Features\RedeemVoucherFeature.cs" />
     <Compile Include="Features\RedeemVoucherSteps.cs" />
@@ -212,33 +203,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Common\config\db.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Features\RedeemVoucher.feature" />
     <None Include="nlog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DBScripts\1 - EFMigrationsHistory.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DBScripts\2 - CatchUpSubscription.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DBScripts\3 - EventStoreServer.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DBScripts\4 - Subscription.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DBScripts\5 - Indexes.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="projections\continuous\MerchantAggregator.js" />
-    <Content Include="projections\continuous\MerchantBalanceCalculator.js" />
+    <ProjectReference Include="..\VoucherRedemption.Clients\VoucherRedemption.Clients.csproj">
+      <Project>{472f9880-e2ce-4f04-8ec7-f062203cfa3a}</Project>
+      <Name>VoucherRedemption.Clients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoucherRedemption.IntegrationTestClients\VoucherRedemption.IntegrationTestClients.csproj">
+      <Project>{906bc43c-045f-4217-8130-6039a63fe05b}</Project>
+      <Name>VoucherRedemption.IntegrationTestClients</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -246,7 +224,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.UITest.3.0.12\build\Xamarin.UITest.props'))" />
     <Error Condition="!Exists('..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets'))" />
     <Error Condition="!Exists('..\packages\Shouldly.4.0.3\build\Shouldly.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Shouldly.4.0.3\build\Shouldly.props'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.3.1.80\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.3.1.80\build\SpecFlow.targets'))" />
@@ -255,6 +232,7 @@
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.props'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.1.80\build\SpecFlow.Tools.MsBuild.Generation.targets'))" />
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.UITest.3.0.13\build\Xamarin.UITest.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.UITest.3.0.13\build\Xamarin.UITest.props'))" />
   </Target>
   <Import Project="..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets" Condition="Exists('..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets')" />
   <Import Project="..\packages\SpecFlow.3.1.80\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.1.80\build\SpecFlow.targets')" />

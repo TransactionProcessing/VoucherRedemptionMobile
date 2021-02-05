@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Entities;
-    using Models;
     using SQLite;
+    using VoucherRedemption.Clients;
+    using LogMessage = Entities.LogMessage;
 
     /// <summary>
     /// 
@@ -18,7 +18,7 @@
         /// <summary>
         /// The connection
         /// </summary>
-        private readonly SQLiteAsyncConnection Connection;
+        private readonly SQLiteConnection Connection;
 
         #endregion
 
@@ -38,9 +38,8 @@
         /// <param name="connectionString">The connection string.</param>
         public DatabaseContext(String connectionString)
         {
-            this.Connection = new SQLiteAsyncConnection(connectionString);
+            this.Connection = new SQLiteConnection(connectionString);
         }
-
         #endregion
 
         #region Methods
@@ -150,9 +149,14 @@
         /// <returns></returns>
         public async Task<List<LogMessage>> GetLogMessages(Int32 batchSize)
         {
-            List<LogMessage> messages = await this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToListAsync();
+            if (this.Connection != null)
+            {
+                List<LogMessage> messages = this.Connection.Table<LogMessage>().OrderBy(l => l.EntryDateTime).Take(batchSize).ToList();
 
-            return messages;
+                return messages;
+            }
+
+            return new List<LogMessage>();
         }
 
         /// <summary>
@@ -160,8 +164,11 @@
         /// </summary>
         public async Task InitialiseDatabase()
         {
-            // Create the required tables
-            await this.Connection.CreateTableAsync<LogMessage>();
+            if (this.Connection != null)
+            {
+                // Create the required tables
+                this.Connection.CreateTable<LogMessage>();
+            }
         }
 
         /// <summary>
@@ -170,12 +177,15 @@
         /// <param name="logMessage">The log message.</param>
         public async Task InsertLogMessage(LogMessage logMessage)
         {
-            Console.WriteLine(logMessage.Message);
-
-            LogLevel messageLevel = (LogLevel)Enum.Parse(typeof(LogLevel), logMessage.LogLevel, true);
-            if (App.Configuration == null || messageLevel <= App.Configuration.LogLevel)
+            if (this.Connection != null)
             {
-                await this.Connection.InsertAsync(logMessage);
+                Console.WriteLine(logMessage.Message);
+
+                LogLevel messageLevel = (LogLevel)Enum.Parse(typeof(LogLevel), logMessage.LogLevel, true);
+                if (App.Configuration == null || messageLevel <= App.Configuration.LogLevel)
+                {
+                    this.Connection.Insert(logMessage);
+                }
             }
         }
 
@@ -197,9 +207,12 @@
         /// <param name="logMessagesToRemove">The log messages to remove.</param>
         public async Task RemoveUploadedMessages(List<LogMessage> logMessagesToRemove)
         {
-            foreach (LogMessage logMessage in logMessagesToRemove)
+            if (this.Connection != null)
             {
-                await this.Connection.DeleteAsync(logMessage);
+                foreach (LogMessage logMessage in logMessagesToRemove)
+                {
+                    this.Connection.Delete(logMessage);
+                }
             }
         }
         

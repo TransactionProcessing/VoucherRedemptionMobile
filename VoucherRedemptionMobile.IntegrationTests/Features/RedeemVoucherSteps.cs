@@ -3,9 +3,15 @@
 namespace VoucherRedemptionMobile.IntegrationTests.Features
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Common;
     using Pages;
+    using Shouldly;
+    using TestClients;
+    using TestClients.Models;
+    using TransactionMobile.IntegrationTests;
+    using VoucherRedemption.Clients;
 
     /// <summary>
     /// 
@@ -14,15 +20,11 @@ namespace VoucherRedemptionMobile.IntegrationTests.Features
     [Scope(Tag = "redeemvoucher")]
     public class RedeemVoucherSteps
     {
-        /// <summary>
-        /// The testing context
-        /// </summary>
         private readonly TestingContext TestingContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RedeemVoucherSteps"/> class.
         /// </summary>
-        /// <param name="testingContext">The testing context.</param>
         public RedeemVoucherSteps(TestingContext testingContext)
         {
             this.TestingContext = testingContext;
@@ -100,24 +102,13 @@ namespace VoucherRedemptionMobile.IntegrationTests.Features
         {
             await this.voucherRedemptionPage.AssertOnPage();
         }
-
-        /// <summary>
-        /// Givens the i enter the voucher code for the voucher for.
-        /// </summary>
-        /// <param name="voucherValue">The voucher value.</param>
-        /// <param name="estateName">Name of the estate.</param>
-        [Given(@"I enter the voucher code for the (.*) voucher for '(.*)'")]
-        public void GivenIEnterTheVoucherCodeForTheVoucherFor(Decimal voucherValue,
-                                                              String estateName)
+        
+        [Given(@"I enter the voucher code '(.*)' voucher")]
+        public void GivenIEnterTheVoucherCodeVoucher(String voucherCode)
         {
-            EstateDetails estateDetails = this.TestingContext.GetEstateDetails(estateName);
-
-            // find the voucher
-            (Guid transactionId, Decimal value, String voucherCode, Guid voucherId, DateTime expiryDateTime) voucher = estateDetails.GetVoucher(voucherValue);
-
-            this.voucherRedemptionPage.EnterVoucherCode(voucher.voucherCode);
+            this.voucherRedemptionPage.EnterVoucherCode(voucherCode);
         }
-
+        
         /// <summary>
         /// Givens the i tap on the find voucher button.
         /// </summary>
@@ -126,26 +117,17 @@ namespace VoucherRedemptionMobile.IntegrationTests.Features
         {
             this.voucherRedemptionPage.ClickFindVoucherButton();
         }
-
-        /// <summary>
-        /// Thens the voucher details are displayed for the voucher for.
-        /// </summary>
-        /// <param name="voucherValue">The voucher value.</param>
-        /// <param name="estateName">Name of the estate.</param>
-        [Then(@"the voucher details are displayed for the (.*) voucher for '(.*)'")]
-        public async Task ThenTheVoucherDetailsAreDisplayedForTheVoucherFor(Decimal voucherValue,
-                                                                            String estateName)
+        
+        [Then(@"the voucher details are displayed for the voucher with code '(.*)'")]
+        public void ThenTheVoucherDetailsAreDisplayedForTheVoucherWithCode(String voucherCode)
         {
-            await this.voucherDetailsPage.AssertOnPage();
+            Voucher voucher = this.TestingContext.Vouchers.SingleOrDefault(v => v.VoucherCode == voucherCode);
 
-            EstateDetails estateDetails = this.TestingContext.GetEstateDetails(estateName);
+            voucher.ShouldNotBeNull();
 
-            // find the voucher
-            (Guid transactionId, Decimal value, String voucherCode, Guid voucherId, DateTime expiryDateTime) voucher = estateDetails.GetVoucher(voucherValue);
-
-            this.voucherDetailsPage.AssertVoucherDetails(voucher.voucherCode, voucher.value, voucher.value, voucher.expiryDateTime);
+            this.voucherDetailsPage.AssertVoucherDetails(voucher.VoucherCode, voucher.Value, voucher.Value, voucher.ExpiryDate);
         }
-
+        
         /// <summary>
         /// Whens the i tap on the redeem button.
         /// </summary>

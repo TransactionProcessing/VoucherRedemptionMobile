@@ -64,21 +64,33 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             return deviceIdentifier;
         }
 
-        public static void SetConfiguration(String configHostAddress)
+        public static void SetIntegrationTestModeOn()
         {
             if (AppManager.platform == Platform.Android)
             {
-                AppManager.app.Invoke("SetConfiguration", configHostAddress);
+                AppManager.app.Invoke("SetIntegrationTestModeOn");
             }
             else if (AppManager.platform == Platform.iOS)
             {
-                AppManager.app.Invoke("SetConfiguration:", configHostAddress);
+                AppManager.app.Invoke("SetIntegrationTestModeOn:", String.Empty);
+            }
+        }
+
+        public static void AddTestVoucher(String voucherData)
+        {
+            // Build the voucher data
+            if (AppManager.platform == Platform.Android)
+            {
+                AppManager.app.Invoke("AddTestVoucher", voucherData);
+            }
+            else if (AppManager.platform == Platform.iOS)
+            {
+                AppManager.app.Invoke("AddTestVoucher:", voucherData);
             }
         }
 
         public static void StartApp()
         {
-
             String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             if (Platform == Platform.Android)
@@ -90,11 +102,12 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                 else
                 {
                     String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", @"VoucherRedemptionMobile.Android/bin/Release");
-                    app = ConfigureApp.Android
-                                      // Used to run a .apk file:
-                                      .ApkFile(Path.Combine(binariesFolder, "com.transactionprocessing.voucherredemptionmobile.apk")).EnableLocalScreenshots().StartApp();
+                    String apkPath = Path.Combine(binariesFolder, "com.transactionprocessing.voucherredemptionmobile.apk");
+                    app = ConfigureApp.Android.ApkFile(apkPath).EnableLocalScreenshots().Debug().StartApp();
                 }
 
+                // Enable integration test mode
+                AppManager.SetIntegrationTestModeOn();
                 return;
             }
 
@@ -102,7 +115,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
             {
                 String device = Environment.GetEnvironmentVariable("Device");
                 String deviceIdentifier = AppManager.GetDeviceIdentifier(device);
-
+                
                 if (Debugger.IsAttached)
                 {
                     app = ConfigureApp.iOS.EnableLocalScreenshots().Debug().StartApp();
@@ -116,8 +129,14 @@ namespace VoucherRedemptionMobile.IntegrationTests.Common
                                       .AppBundle(Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app")).DeviceIdentifier(deviceIdentifier)
                                       .StartApp();
                 }
+
+                // Enable integration test mode
+                AppManager.SetIntegrationTestModeOn();
+
                 return;
             }
+
+            
         }
 
         /// <summary>
