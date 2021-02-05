@@ -68,10 +68,9 @@
             AppDomain.CurrentDomain.UnhandledException += this.CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += this.TaskSchedulerOnUnobservedTaskException;
 
-            //String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
+            String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
             this.Device = new iOSDevice();
-            //this.Database = new DatabaseContext(connectionString);
-            this.Database = new DatabaseContext();
+            this.Database = new DatabaseContext(connectionString);
 
             Forms.Init();
 
@@ -91,23 +90,12 @@
         {
             Console.WriteLine($"Inside SetIntegrationTestModeOn");
             App.IsIntegrationTestMode = true;
-            //App.Container.Configure((c) =>
-            //                        {
-            //                            c.For<IConfigurationServiceClient>().ClearAll();
-            //                            c.For<ISecurityServiceClient>().ClearAll();
-            //                            c.For<IEstateClient>().ClearAll();
-            //                            c.For<IVoucherManagerACLClient>().ClearAll();
-            //                        });
             App.Container = Bootstrapper.Run();
 
             IDevice device = new iOSDevice();
             String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
             DatabaseContext database = new DatabaseContext(connectionString);
-            //App.Container.Configure((c) =>
-            //                        {
-            //                            c.For<IDevice>().Use(device).Transient();
-            //                            c.For<IDatabaseContext>().Use(database).Transient();
-            //                        });
+            
             App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
             App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
         }

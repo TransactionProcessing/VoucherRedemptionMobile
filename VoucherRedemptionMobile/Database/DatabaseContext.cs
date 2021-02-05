@@ -40,11 +40,6 @@
         {
             this.Connection = new SQLiteAsyncConnection(connectionString);
         }
-
-        public DatabaseContext()
-        {
-        }
-
         #endregion
 
         #region Methods
