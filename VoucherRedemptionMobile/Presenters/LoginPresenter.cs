@@ -18,6 +18,7 @@
     using SecurityService.DataTransferObjects.Responses;
     using TransactionProcessorACL.DataTransferObjects;
     using TransactionProcessorACL.DataTransferObjects.Responses;
+    using Unity;
     using ViewModels;
     using VoucherRedemption.Clients;
     using Xamarin.Forms;
@@ -120,7 +121,7 @@
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void LoginPage_SupportButtonClick(object sender, EventArgs e)
         {
-            ISupportPresenter supportPresenter = App.Container.GetInstance<ISupportPresenter>();
+            ISupportPresenter supportPresenter = App.Container.Resolve<ISupportPresenter>();
             supportPresenter.Start();
         }
         
@@ -133,7 +134,7 @@
             try
             {
                 Console.WriteLine("Config is null");
-                IConfigurationServiceClient configurationServiceClient = App.Container.GetInstance<IConfigurationServiceClient>();
+                IConfigurationServiceClient configurationServiceClient = App.Container.Resolve<IConfigurationServiceClient>();
                 App.Configuration = await configurationServiceClient.GetConfiguration(this.Device.GetDeviceIdentifier(), CancellationToken.None);
                 // TODO: Logging
                 Console.WriteLine("Config retrieved");
@@ -158,7 +159,7 @@
         {
             try
             {
-                ISecurityServiceClient securityServiceClient = App.Container.GetInstance<ISecurityServiceClient>();
+                ISecurityServiceClient securityServiceClient = App.Container.Resolve<ISecurityServiceClient>();
                 //this.LoginViewModel.EmailAddress = "redemptionuser@healthcarecentre1.co.uk";
                 //this.LoginViewModel.Password = "123456";
 
@@ -213,7 +214,7 @@
 
         private void MainPage_VoucherButtonClicked(object sender, EventArgs e)
         {
-            IVoucherPresenter voucherPresenter = App.Container.GetInstance<IVoucherPresenter>();
+            IVoucherPresenter voucherPresenter = App.Container.Resolve<IVoucherPresenter>();
             voucherPresenter.Start();
         }
 
@@ -225,7 +226,7 @@
         private void MainPage_SupportButtonClicked(Object sender,
                                                    EventArgs e)
         {
-            ISupportPresenter supportPresenter = App.Container.GetInstance<ISupportPresenter>();
+            ISupportPresenter supportPresenter = App.Container.Resolve<ISupportPresenter>();
             supportPresenter.Start();
         }
         

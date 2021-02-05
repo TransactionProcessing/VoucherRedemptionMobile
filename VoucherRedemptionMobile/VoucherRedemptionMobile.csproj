@@ -32,9 +32,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SecurityService.Client" Version="1.0.4" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="structuremap" Version="4.7.1" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.4.0.31" />
     <PackageReference Include="TransactionProcessorACL.DataTransferObjects" Version="1.0.6.3" />
+    <PackageReference Include="Unity" Version="5.11.10" />
     <PackageReference Include="VoucherManagementACL.DataTransferObjects" Version="0.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />

@@ -13,8 +13,9 @@
     using Plugin.Toast.Abstractions;
     using Presenters;
     using SecurityService.DataTransferObjects.Responses;
-    using StructureMap;
     using Syncfusion.Licensing;
+    using Unity;
+    using Unity.Lifetime;
     using VoucherRedemption.Clients;
     using Xamarin.Forms;
     using IDevice = Common.IDevice;
@@ -37,7 +38,7 @@
         /// <summary>
         /// Unity container
         /// </summary>
-        public static IContainer Container;
+        public static IUnityContainer Container;
 
         /// <summary>
         /// The token response
@@ -81,6 +82,7 @@
         public App(IDevice device,
                    IDatabaseContext database)
         {
+            
             this.Device = device;
             this.Database = database;
 
@@ -93,13 +95,9 @@
 
             App.Container = Bootstrapper.Run();
 
-            App.Container.Configure((c) =>
-                                    {
-                                        c.For<IDevice>().Use(device).Transient();
-                                        c.For<IDatabaseContext>().Use(database).Transient();
-                                    });
+            App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
+            App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
 
-            //App.Container.AssertConfigurationIsValid();
         }
 
         #endregion
@@ -160,7 +158,7 @@
             App.TransactionNumber = 1;
 
             // Handle when your app starts
-            ILoginPresenter loginPresenter = App.Container.GetInstance<ILoginPresenter>();
+            ILoginPresenter loginPresenter = App.Container.Resolve<ILoginPresenter>();
             
             // show the login page
             await loginPresenter.Start();
