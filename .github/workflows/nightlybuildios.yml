@@ -28,10 +28,10 @@ jobs:
       uses: olegtarasov/download-nuget@v1
           
     - name: Restore Nuget Packages
-      run: mono $NUGET_EXE restore TransactionMobile/TransactionMobile.sln -source "https://api.nuget.org/v3/index.json;https://www.myget.org/F/transactionprocessing/api/v3/index.json"
+      run: mono $NUGET_EXE restore VoucherRedemptionMobile.sln -source "https://api.nuget.org/v3/index.json;https://www.myget.org/F/transactionprocessing/api/v3/index.json"
 
     - name: Build Code
-      run: msbuild /p:Configuration="Release" /p:Platform="iPhoneSimulator" /t:Build TransactionMobile/TransactionMobile.sln
+      run: msbuild /p:Configuration="Release" /p:Platform="iPhoneSimulator" /t:Build VoucherRedemptionMobile.sln
 
     - name: Create Screenshot Folder
       run: mkdir -p /Users/runner/screenshots
