@@ -51,7 +51,18 @@
                 container.RegisterSingleton<IConfigurationServiceClient, ConfigurationServiceClient>();
                 container.RegisterSingleton<ISecurityServiceClient, SecurityServiceClient>();
                 container.RegisterSingleton<IVoucherManagerACLClient, VoucherManagerACLClient>();
-                container.RegisterInstance(new HttpClient());
+                HttpClientHandler httpClientHandler = new HttpClientHandler
+                                                      {
+                                                          ServerCertificateCustomValidationCallback = (message,
+                                                                                                       certificate2,
+                                                                                                       arg3,
+                                                                                                       arg4) =>
+                                                                                                      {
+                                                                                                          return true;
+                                                                                                      }
+                                                      };
+                HttpClient httpClient = new HttpClient(httpClientHandler);
+                container.RegisterInstance(httpClient);
                 container.RegisterInstance<Func<String, String>>(
                 new Func<String, String>(configSetting =>
                                                                               {

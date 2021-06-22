@@ -77,6 +77,12 @@ namespace VoucherRedemptionMobile.TestClients
             return null;
         }
 
+        public async Task<CreateApiScopeResponse> CreateApiScope(CreateApiScopeRequest createApiScopeRequest,
+                                                                 CancellationToken cancellationToken)
+        {
+            return null;
+        }
+
         public async Task<CreateClientResponse> CreateClient(CreateClientRequest createClientRequest,
                                                              CancellationToken cancellationToken)
         {
@@ -107,7 +113,18 @@ namespace VoucherRedemptionMobile.TestClients
             return null;
         }
 
+        public async Task<ApiScopeDetails> GetApiScope(String apiScopeName,
+                                                       CancellationToken cancellationToken)
+        {
+            return null;
+        }
+
         public async Task<List<ApiResourceDetails>> GetApiResources(CancellationToken cancellationToken)
+        {
+            return null;
+        }
+
+        public async Task<List<ApiScopeDetails>> GetApiScopes(CancellationToken cancellationToken)
         {
             return null;
         }
