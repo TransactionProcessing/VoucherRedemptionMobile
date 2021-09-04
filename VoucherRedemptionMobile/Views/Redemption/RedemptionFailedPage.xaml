@@ -23,6 +23,7 @@
                     Margin="0,40,0,0"
                     Style="{StaticResource LabelStyle}"
                     HorizontalTextAlignment="Center"
+                    AutomationId="RedemptionFailedLabel"
                     Text="REDEMPTION FAILURE" />
 
                 <buttons:SfButton

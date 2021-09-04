@@ -43,7 +43,7 @@ jobs:
     - name: Run Integration Tests - Android
       uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
       with:
-          cmd: mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.IntegrationTests/bin/Release/VoucherRedemptionMobile.IntegrationTests.dll --where "cat == Android&&cat == PRTest"
+          cmd: dotnet test VoucherRedemptionMobile/VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter (Category=PRTest)&(Category=Android)
           api: 24
           tag: default
           abi: x86   
