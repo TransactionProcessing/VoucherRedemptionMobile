@@ -45,7 +45,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability("forceEspressoRebuild", true);
                 driverOptions.AddAdditionalCapability("enforceAppInstall", true);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
-                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "9.0");
+                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "7.0");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.DeviceName, "emulator-5554");
 
                 String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
