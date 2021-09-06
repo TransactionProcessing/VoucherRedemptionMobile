@@ -47,4 +47,4 @@ jobs:
     #  run: mono $GITHUB_WORKSPACE/packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.UnitTests/bin/Release/VoucherRedemptionMobile.UnitTests.dll  
   
     - name: Run Integration Tests - iOS
-      run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter Category=PRTest&Category=iOS
+      run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter "Category=PRTest&Category=iOS"
