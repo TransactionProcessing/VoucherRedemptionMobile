@@ -24,7 +24,7 @@
             await Retry.For(async () =>
                             {
                                 element = driver.FindElementByAccessibilityId(selector);
-                                element.ShouldNotBeNull();
+                                element.ShouldNotBeNull($"Element {selector} is null but should not be");
                             });
 
             return element;
@@ -38,7 +38,7 @@
             await Retry.For(async () =>
                             {
                                 element = driver.FindElementByAccessibilityId(selector);
-                                element.ShouldNotBeNull();
+                                element.ShouldNotBeNull($"Element {selector} is null but should not be");
                             });
 
             return element;
@@ -52,7 +52,7 @@
             await Retry.For(async () =>
                             {
                                 var element = driver.FindElementByAccessibilityId(selector);
-                                element.ShouldBeNull();
+                                element.ShouldNotBeNull($"Element {selector} is not null but should be");
                             });
 
         }
@@ -64,7 +64,7 @@
             await Retry.For(async () =>
                             {
                                 var element = driver.FindElementByAccessibilityId(selector);
-                                element.ShouldBeNull();
+                                element.ShouldNotBeNull($"Element {selector} is not null but should be");
                             });
 
         }

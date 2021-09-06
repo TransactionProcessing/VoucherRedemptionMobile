@@ -7,8 +7,7 @@
              xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:controls="clr-namespace:TransactionMobile.Controls;assembly=TransactionMobile"
-             xmlns:controls1="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
+             xmlns:controls="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
              x:Class="VoucherRedemptionMobile.Views.TestModePage">
 
     <ContentPage.Content>
@@ -36,7 +35,7 @@
                 <border:SfBorder
                     BackgroundColor="{DynamicResource Gray-White}"
                     Style="{StaticResource SfBorderStyle}">
-                    <controls1:BorderlessEntry
+                    <controls:BorderlessEntry
                         x:Name="PinEntry"
                         Placeholder="Pin"
                         PlaceholderColor="{DynamicResource Gray-700}"
@@ -49,7 +48,7 @@
                 <border:SfBorder
                     BackgroundColor="{DynamicResource Gray-White}"
                     Style="{StaticResource SfBorderStyle}">
-                    <controls1:BorderlessEntry
+                    <controls:BorderlessEntry
                         x:Name="TestVoucherDataEntry"
                         Placeholder="Voucher Data"
                         PlaceholderColor="{DynamicResource Gray-700}"

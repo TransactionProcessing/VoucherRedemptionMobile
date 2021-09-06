@@ -13,7 +13,7 @@
         public TestModePage()
         {
             this.PinEntry = "PinEntry";
-            this.TestVoucherDataEntry = "TestVoucherData";
+            this.TestVoucherDataEntry = "TestVoucherDataEntry";
 
             this.SetTestModeButton = "SetTestModeButton";
         }
