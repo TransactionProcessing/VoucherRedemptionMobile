@@ -7,7 +7,9 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
     using System.Threading.Tasks;
     using Common;
     using Drivers;
+    using Features;
     using Newtonsoft.Json;
+    using Pages;
     using TechTalk.SpecFlow;
     using TestClients.Models;
 
@@ -20,6 +22,9 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         private readonly ScenarioContext ScenarioContext;
 
         private readonly TestingContext TestingContext;
+
+        private LoginPage LoginPage = new LoginPage();
+        private TestModePage TestModePage = new TestModePage();
 
         public BackgroundSteps(BackdoorDriver backdoor,
                                ScenarioContext scenarioContext,
@@ -71,6 +76,22 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
                 
                 await this.Backdoor.AddTestVoucher(voucher);
                 this.TestingContext.Vouchers.Add(voucher);
+            }
+        }
+
+        [Given(@"the application in in test mode")]
+        public async Task GivenTheApplicationInInTestMode()
+        {
+            if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
+            {
+                await this.LoginPage.ClickTestModeButton();
+
+                var vouchers = this.TestingContext.Vouchers;
+                var voucherData = JsonConvert.SerializeObject(vouchers);
+                await this.TestModePage.EnterPin("1234");
+
+                await this.TestModePage.EnterTestVoucherData(voucherData);
+                await this.TestModePage.ClickSetTestModeButton();
             }
         }
     }

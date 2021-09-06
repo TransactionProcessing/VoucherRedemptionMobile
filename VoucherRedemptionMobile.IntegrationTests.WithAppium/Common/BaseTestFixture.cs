@@ -23,7 +23,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Features
     }
 
     [TestFixture(MobileTestPlatform.Android, Category = "Android")]
-    //[TestFixture(Platform.iOS, Category = "iOS")]
+    [TestFixture(MobileTestPlatform.iOS, Category = "iOS")]
     public partial class RedeemVoucherFeature : BaseTestFixture
     {
         public RedeemVoucherFeature(MobileTestPlatform platform)
@@ -33,7 +33,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Features
     }
 
     [TestFixture(MobileTestPlatform.Android, Category = "Android")]
-    //[TestFixture(Platform.iOS, Category = "iOS")]
+    [TestFixture(MobileTestPlatform.iOS, Category = "iOS")]
     public partial class LoginFeature : BaseTestFixture
     {
         public LoginFeature(MobileTestPlatform platform)

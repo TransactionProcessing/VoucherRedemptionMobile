@@ -135,6 +135,15 @@
                         Style="{StaticResource SfButtonStyleSmall}"
                         Text="Support"
                         AutomationId="SupportButton"/>
+
+                    <Button Text="TestMode" Grid.Row="7" x:Name="TestModeButton" AutomationId="TestModeButton" HeightRequest="1" WidthRequest="1">
+                        <Button.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="iOS">true</On>
+                                <On Platform="Android">true</On>
+                            </OnPlatform>
+                        </Button.IsVisible>
+                    </Button>
                 </Grid>
 
             </StackLayout>

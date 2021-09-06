@@ -38,4 +38,11 @@
 
         #endregion
     }
+
+    public interface ITestModePage
+    {
+        void Init(TestModePageViewModel viewModel);
+
+        event EventHandler SetTestModeButtonClick;
+    }
 }

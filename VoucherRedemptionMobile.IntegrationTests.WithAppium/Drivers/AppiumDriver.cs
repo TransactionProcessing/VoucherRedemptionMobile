@@ -19,22 +19,29 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
 
         public static IOSDriver<IOSElement> iOSDriver;
 
+        private static Boolean UseInternalAppiumService = true;
+
         public AppiumDriver()
         {
         }
 
         public void StartApp()
         {
-            AppiumLocalService appiumService = new AppiumServiceBuilder().UsingPort(4723).Build();
-
-            if (appiumService.IsRunning == false)
+            AppiumLocalService appiumService = null;
+            if (AppiumDriver.UseInternalAppiumService == true)
             {
-                appiumService.Start();
+                appiumService = new AppiumServiceBuilder().UsingPort(4723).Build();
 
-                //Console.WriteLine($"appiumService.IsRunning - {appiumService.IsRunning}");
+                if (appiumService.IsRunning == false)
+                {
+                    appiumService.Start();
+
+                    //Console.WriteLine($"appiumService.IsRunning - {appiumService.IsRunning}");
+                }
+
+                appiumService.OutputDataReceived += AppiumService_OutputDataReceived;
             }
 
-            appiumService.OutputDataReceived += AppiumService_OutputDataReceived;
 
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)
             {
@@ -45,7 +52,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability("forceEspressoRebuild", true);
                 driverOptions.AddAdditionalCapability("enforceAppInstall", true);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
-                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "7.0");
+                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "9.0");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.DeviceName, "emulator-5554");
 
                 String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -55,10 +62,14 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability("espressoBuildConfig",
                                                       "{ \"additionalAppDependencies\": [ \"com.google.android.material:material:1.0.0\", \"androidx.lifecycle:lifecycle-extensions:2.1.0\" ] }");
 
-                //AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(new Uri("http://127.0.0.1:4723/wd/hub"), driverOptions, TimeSpan.FromMinutes(5));
-
-
-                AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
+                if (AppiumDriver.UseInternalAppiumService == true)
+                {
+                    AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
+                }
+                else
+                {
+                    AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(new Uri("http://127.0.0.1:4723/wd/hub"), driverOptions, TimeSpan.FromMinutes(5));
+                }
             }
 
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
