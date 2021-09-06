@@ -13,7 +13,7 @@ jobs:
         ANDROID_HOME: "/Users/runner/Library/Android/sdk"
         ScreenshotFolder: "/Users/runner/screenshots"
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        Device: "iPhone 11 (14.3)"
+        Device: "iPhone 11 (14.4)"
     runs-on: macos-latest
 
     steps:
@@ -24,6 +24,15 @@ jobs:
           
     - name: log out simulators
       run: xcrun instruments -s devices
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.12.0'
+
+    - name: Set up Appium
+      run: |
+        npm install -g appium --unsafe-perm=true --allow-root
      
     - name: Setup Nuget
       uses: olegtarasov/download-nuget@v1
@@ -35,17 +44,7 @@ jobs:
       run: msbuild /p:Configuration="Release" /p:Platform="iPhoneSimulator" /t:Build VoucherRedemptionMobile.sln
     
     #- name: Run Unit Tests
-    #  run: mono $GITHUB_WORKSPACE/packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.UnitTests/bin/Release/VoucherRedemptionMobile.UnitTests.dll
-   
-    #- name: Create Screenshot Folder
-    #  run: mkdir -p /Users/runner/screenshots
-
+    #  run: mono $GITHUB_WORKSPACE/packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.UnitTests/bin/Release/VoucherRedemptionMobile.UnitTests.dll  
+  
     - name: Run Integration Tests - iOS
-      run: mono ./packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe VoucherRedemptionMobile.IntegrationTests/bin/Release/VoucherRedemptionMobile.IntegrationTests.dll --where "cat == iOS"   
-   
-    - uses: actions/upload-artifact@v2.2.1
-      if: failure()
-      with:
-        name: screenshots
-        path: /Users/runner/screenshots/**/*
-
+      run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter "Category=PRTest&Category=iOS"

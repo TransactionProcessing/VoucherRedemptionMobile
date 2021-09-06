@@ -20,6 +20,11 @@
         /// </summary>
         event EventHandler SupportButtonClick;
 
+        /// <summary>
+        /// Occurs when [test mode button click].
+        /// </summary>
+        event EventHandler TestModeButtonClick;
+
         #endregion
 
         #region Methods
@@ -37,5 +42,12 @@
         void SetSignInFailureMessage(String failureMessage);
 
         #endregion
+    }
+
+    public interface ITestModePage
+    {
+        void Init(TestModePageViewModel viewModel);
+
+        event EventHandler SetTestModeButtonClick;
     }
 }

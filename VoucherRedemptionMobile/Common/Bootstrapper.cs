@@ -105,6 +105,7 @@
             // General
             container.RegisterType<IMainPage, MainPage>(new TransientLifetimeManager());
             container.RegisterType<ILoginPage, LoginPage>(new TransientLifetimeManager());
+            container.RegisterType<ITestModePage, TestModePage>(new TransientLifetimeManager());
 
             // Support
             container.RegisterType<ISupportPage, SupportPage>(new TransientLifetimeManager());
@@ -123,6 +124,7 @@
             container.RegisterType<MainPageViewModel>(new TransientLifetimeManager());
             container.RegisterType<RedemptionEnterVoucherCodeViewModel>(new TransientLifetimeManager());
             container.RegisterType<RedemptionEnterVoucherCodeViewModel>(new TransientLifetimeManager());
+            container.RegisterType<TestModePageViewModel>(new TransientLifetimeManager());
         }
 
         #endregion
