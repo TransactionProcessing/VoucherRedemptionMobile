@@ -57,6 +57,11 @@
         /// </summary>
         public event EventHandler SupportButtonClick;
 
+        /// <summary>
+        /// Occurs when [test mode button click].
+        /// </summary>
+        public event EventHandler TestModeButtonClick;
+
         #endregion
 
         #region Methods
@@ -79,6 +84,12 @@
 
             this.LoginButton.Clicked += this.Login_Clicked;
             this.SupportButton.Clicked += this.LoginPage_SupportButtonClick;
+            this.TestModeButton.Clicked += TestModeButton_Clicked;
+        }
+
+        private void TestModeButton_Clicked(object sender, EventArgs e)
+        {
+            this.TestModeButtonClick(sender, e);
         }
 
         private void LoginPage_SupportButtonClick(object sender, EventArgs e)

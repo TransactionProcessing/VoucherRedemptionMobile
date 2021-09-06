@@ -74,7 +74,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
                                       VoucherId = Guid.NewGuid()
                                   };
                 
-                await this.Backdoor.AddTestVoucher(voucher);
+                //await this.Backdoor.AddTestVoucher(voucher);
                 this.TestingContext.Vouchers.Add(voucher);
             }
         }

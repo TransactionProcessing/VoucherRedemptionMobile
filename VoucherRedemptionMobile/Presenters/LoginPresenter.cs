@@ -124,6 +124,8 @@
             
             this.LoginPage.LoginButtonClick += this.LoginPage_LoginButtonClick;
             this.LoginPage.SupportButtonClick += this.LoginPage_SupportButtonClick;
+            this.LoginPage.TestModeButtonClick += this.LoginPage_TestModeButtonClick;
+
             this.LoginPage.Init(this.LoginViewModel);
 
             Application.Current.MainPage = new NavigationPage((Page)this.LoginPage);

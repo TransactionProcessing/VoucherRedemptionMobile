@@ -59,7 +59,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Pages
             }
             catch(Exception ex)
             {
-                throw new Exception("Element {x} not found on page");
+                throw new Exception($"Element {x} not found on page");
             }
         }
 

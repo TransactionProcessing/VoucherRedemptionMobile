@@ -20,6 +20,11 @@
         /// </summary>
         event EventHandler SupportButtonClick;
 
+        /// <summary>
+        /// Occurs when [test mode button click].
+        /// </summary>
+        event EventHandler TestModeButtonClick;
+
         #endregion
 
         #region Methods
