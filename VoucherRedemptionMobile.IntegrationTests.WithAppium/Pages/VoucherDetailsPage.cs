@@ -95,7 +95,9 @@
 
             var expiryDateLabel = await this.WaitForElementByAccessibilityId(this.ExpiryDateLabel);
             expiryDateLabel.ShouldNotBeNull();
-            expiryDateLabel.Text.ShouldBe(expiryDate.ToString());
+            //expiryDateLabel.Text.ShouldBe(expiryDate.ToString());
+            var actualExpiryDate = DateTime.Parse(expiryDateLabel.Text);
+            actualExpiryDate.ShouldBe(expiryDate, TimeSpan.FromHours(1));
         }
 
         /// <summary>
