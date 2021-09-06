@@ -12,7 +12,7 @@ Background:
 
 	Given the application in in test mode
 
-#@PRTest
+@PRTest
 Scenario: Redeem Vouchers
 	Given I am on the Login Screen
 
