@@ -37,15 +37,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SecurityService.Client" Version="1.0.6.4" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.4.0.31" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.2.0.59" />
     <PackageReference Include="TransactionProcessorACL.DataTransferObjects" Version="1.0.10.2" />
     <PackageReference Include="Unity" Version="5.11.10" />
     <PackageReference Include="VoucherManagementACL.DataTransferObjects" Version="1.0.3.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.31" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.31" />
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.4.0.31" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.2.0.59" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.2.0.59" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.2.0.59" />
     <PackageReference Include="Plugin.Toast" Version="2.2.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>

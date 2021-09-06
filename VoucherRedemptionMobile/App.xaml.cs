@@ -80,7 +80,8 @@
 
             this.InitializeComponent();
 
-            SyncfusionLicenseProvider.RegisterLicense("MzcxNTgwQDMxMzgyZTM0MmUzMEpNaXFsaFQ5bFErcVord05LSkVUeVd0MWRyaVE0NllvcFJmRzVZTWVTNlE9");
+            SyncfusionLicenseProvider.RegisterLicense("NDg4NzEyQDMxMzkyZTMyMmUzMGxtd2xHd2RtbFZGR2JUZkdUdW5DWjBnLzUwc3ZtNi9xWFU2YzFzdE5DWm89");
+            var x = SyncfusionLicenseProvider.ValidateLicense(Syncfusion.Licensing.Platform.Xamarin, out string message);
 
             App.Container = Bootstrapper.Run();
 
