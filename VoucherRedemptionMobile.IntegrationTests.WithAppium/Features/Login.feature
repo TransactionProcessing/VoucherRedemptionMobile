@@ -11,7 +11,8 @@ Background:
 	| 0000000004  | 20.00        |                                | 123456788       |
 
 	Given the application in in test mode
-	
+
+@PRTest	
 Scenario: Login
 	Given I am on the Login Screen
 

@@ -44,16 +44,23 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Pages
 
         public async Task<IWebElement> WaitForElementByAccessibilityId(String x, TimeSpan? timeout = null)
         {
-            if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)
+            try
             {
-                return await AppiumDriver.AndroidDriver.WaitForElementByAccessibilityId(x, timeout);
-            }
-            else if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
-            {
-                return await AppiumDriver.iOSDriver.WaitForElementByAccessibilityId(x, timeout);
-            }
+                if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)
+                {
+                    return await AppiumDriver.AndroidDriver.WaitForElementByAccessibilityId(x, timeout);
+                }
+                else if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
+                {
+                    return await AppiumDriver.iOSDriver.WaitForElementByAccessibilityId(x, timeout);
+                }
 
-            return null;
+                return null;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Element {x} not found on page");
+            }
         }
 
         public async Task<String> GetPageSource()
