@@ -43,4 +43,4 @@ jobs:
       run: msbuild /p:Configuration="Release" /p:Platform="iPhoneSimulator" /t:Build VoucherRedemptionMobile.sln
      
     - name: Run Integration Tests - iOS
-      run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter (Category=PRTest)&(Category=iOS)
+      run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter Category=PRTest&Category=iOS
