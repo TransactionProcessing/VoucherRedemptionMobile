@@ -80,8 +80,8 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "14.4");
 
                 String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", "..", @"TransactionMobile.iOS/bin/iPhoneSimulator/Release");
-                var apkPath = Path.Combine(binariesFolder, "TransactionMobile.iOS.app");
+                String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", "..", @"VoucherRedemptionMobile.iOS/bin/iPhoneSimulator/Release");
+                var apkPath = Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.App, apkPath);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.NoReset, true);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, "XCUITest");
