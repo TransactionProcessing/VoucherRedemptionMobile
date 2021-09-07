@@ -49,7 +49,7 @@ jobs:
     - name: Run Integration Tests - Android
       uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
       with:
-          cmd: dotnet test VoucherRedemptionMobile/VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter (Category=Android)
+          cmd: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter (Category=Android)
           api: 28
           tag: default
           abi: x86   
