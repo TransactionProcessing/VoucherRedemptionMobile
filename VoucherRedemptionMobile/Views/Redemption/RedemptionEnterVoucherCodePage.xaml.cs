@@ -66,7 +66,10 @@ namespace VoucherRedemptionMobile.Views.Redemption
         /// </summary>
         public void ClearVoucherCode()
         {
-            this.ViewModel.VoucherCode = String.Empty;
+            if (this.ViewModel != null)
+            {
+                this.ViewModel.VoucherCode = String.Empty;
+            }
         }
 
         /// <summary>

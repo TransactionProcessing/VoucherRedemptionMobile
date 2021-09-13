@@ -13,20 +13,13 @@
     using Common;
     using Database;
     using EstateManagement.Client;
-    using Java.Interop;
     using Microsoft.AppCenter.Distribute;
-    using Newtonsoft.Json;
     using SecurityService.Client;
-    using TestClients;
-    using TestClients.Models;
-    using Unity;
-    using Unity.Lifetime;
-    using VoucherRedemption.Clients;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.Android;
+    using ZXing.Mobile;
     using Environment = System.Environment;
     using Platform = Xamarin.Essentials.Platform;
-    using Application = Android.App.Application;
 
     /// <summary>
     /// 
@@ -74,58 +67,9 @@
                                                         [GeneratedEnum] Permission[] grantResults)
         {
             Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
-        //[Export("SetIntegrationTestModeOn")]
-        //public void SetIntegrationTestModeOn()
-        //{
-        //    Console.WriteLine($"Inside SetIntegrationTestModeOn");
-        //    App.IsIntegrationTestMode = true;
-        //    //App.Container.Configure((c) =>
-        //    //                        {
-        //    //                            c.For<IConfigurationServiceClient>().ClearAll();
-        //    //                            c.For<ISecurityServiceClient>().ClearAll();
-        //    //                            c.For<IEstateClient>().ClearAll();
-        //    //                            c.For<IVoucherManagerACLClient>().ClearAll();
-        //    //                        });
-        //    App.Container = Bootstrapper.Run();
-
-        //    IDevice device = new AndroidDevice();
-        //    String connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TransactionProcessing.db");
-        //    DatabaseContext database = new DatabaseContext(connectionString);
-        //    //App.Container.Configure((c) =>
-        //    //                        {
-        //    //                            c.For<IDevice>().Use(device).Transient();
-        //    //                            c.For<IDatabaseContext>().Use(database).Transient();
-        //    //                        });
-        //    App.Container.RegisterInstance(this.Database, new ContainerControlledLifetimeManager());
-        //    App.Container.RegisterInstance(this.Device, new ContainerControlledLifetimeManager());
-        //}
-
-        //[Export("AddTestVoucher")]
-        //public void AddTestVoucher(String voucherData)
-        //{
-        //    if (App.IsIntegrationTestMode == true)
-        //    {
-        //        Voucher voucher = JsonConvert.DeserializeObject<Voucher>(voucherData);
-        //        TestVoucherManagementACLClient voucherManagerAclClient = App.Container.Resolve<IVoucherManagerACLClient>() as TestVoucherManagementACLClient;
-                
-        //        voucherManagerAclClient.Vouchers.Add(voucher);
-        //    }
-        //}
         
-        //[Export("GetDeviceIdentifier")]
-        //public String GetDeviceIdentifier()
-        //{
-        //    Console.WriteLine("In Get Device Identifier");
-
-        //    IDevice device = new AndroidDevice();
-
-        //    return device.GetDeviceIdentifier();
-        //}
-
         /// <summary>
         /// Called when [create].
         /// </summary>
@@ -145,8 +89,9 @@
             TaskScheduler.UnobservedTaskException += this.TaskSchedulerOnUnobservedTaskException;
 
             Platform.Init(this, savedInstanceState);
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
+
             Forms.Init(this, savedInstanceState);
-            
             this.LoadApplication(new App(this.Device, this.Database));
         }
 
@@ -177,56 +122,7 @@
 
             Task.Run(async () => { await this.Database.InsertLogMessages(DatabaseContext.CreateFatalLogMessages(newExc)); });
         }
-
+        
         #endregion
-    }
-
-    [Preserve(AllMembers = true)]
-    [Application]
-    public class ThisApp : Application
-    {
-        protected ThisApp(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
-        {
-        }
-
-        //[Export("SetIntegrationTestModeOn")]
-        //public void SetIntegrationTestModeOn(String arg)
-        //{
-        //    Console.WriteLine($"Inside SetIntegrationTestModeOn");
-        //    App.IsIntegrationTestMode = true;
-        //    App.Container = Bootstrapper.Run();
-
-        //    IDevice device = new AndroidDevice();
-        //    IDatabaseContext database = new DatabaseContext(String.Empty);
-        //    App.Container.RegisterInstance(typeof(IDatabaseContext), database, new ContainerControlledLifetimeManager());
-        //    App.Container.RegisterInstance(typeof(IDevice), device, new ContainerControlledLifetimeManager());
-        //}
-        [Export("SetIntegrationTestModeOn")]
-        public void SetIntegrationTestModeOn(String arg)
-        {
-            Console.WriteLine($"Inside SetIntegrationTestModeOn");
-            App.IsIntegrationTestMode = true;
-
-            App.Container = Bootstrapper.Run();
-
-            IDevice device = new AndroidDevice();
-            IDatabaseContext database = new DatabaseContext(String.Empty);
-            App.Container.RegisterInstance(typeof(IDatabaseContext), database, new ContainerControlledLifetimeManager());
-            App.Container.RegisterInstance(typeof(IDevice), device, new ContainerControlledLifetimeManager());
-        }
-
-        [Export("AddTestVoucher")]
-        public void AddTestVoucher(String voucherData)
-        {
-            if (App.IsIntegrationTestMode == true)
-            {
-                Voucher voucher = JsonConvert.DeserializeObject<Voucher>(voucherData);
-                TestVoucherManagementACLClient voucherManagerAclClient = App.Container.Resolve<IVoucherManagerACLClient>() as TestVoucherManagementACLClient;
-
-                voucherManagerAclClient.Vouchers.Add(voucher);
-            }
-        }
-
-
     }
 }

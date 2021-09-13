@@ -220,8 +220,8 @@
             try
             {
                 ISecurityServiceClient securityServiceClient = App.Container.Resolve<ISecurityServiceClient>();
-                //this.LoginViewModel.EmailAddress = "redemptionuser@healthcarecentre1.co.uk";
-                //this.LoginViewModel.Password = "123456";
+                this.LoginViewModel.EmailAddress = "redemptionuser@healthcarecentre1.co.uk";
+                this.LoginViewModel.Password = "123456";
 
                 await this.Database.InsertLogMessage(DatabaseContext.CreateDebugLogMessage("About to Get Configuration"));
                 await this.GetConfiguration();

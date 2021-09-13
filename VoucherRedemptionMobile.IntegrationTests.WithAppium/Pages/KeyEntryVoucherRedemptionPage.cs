@@ -8,7 +8,7 @@
     /// 
     /// </summary>
     /// <seealso cref="BasePage" />
-    public class VoucherRedemptionPage : BasePage
+    public class KeyEntryVoucherRedemptionPage : BasePage
     {
         #region Fields
 
@@ -27,9 +27,9 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VoucherRedemptionPage"/> class.
+        /// Initializes a new instance of the <see cref="KeyEntryVoucherRedemptionPage"/> class.
         /// </summary>
-        public VoucherRedemptionPage()
+        public KeyEntryVoucherRedemptionPage()
         {
             this.VoucherCodeEntry = "VoucherCodeEntry";
             this.FindVoucherButton = "FindVoucherButton";

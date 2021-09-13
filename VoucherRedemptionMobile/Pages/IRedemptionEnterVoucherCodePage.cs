@@ -2,6 +2,7 @@
 {
     using System;
     using ViewModels;
+    using ZXing;
 
     /// <summary>
     /// 
@@ -36,5 +37,14 @@
         void Init(RedemptionEnterVoucherCodeViewModel viewModel);
 
         #endregion
+    }
+
+    public interface IRedemptionScanVoucherCodePage
+    {
+        void Init();
+
+        event EventHandler<Result> VoucherBarcodeScanned;
+
+        event EventHandler CancelButtonClick;
     }
 }

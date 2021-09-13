@@ -13,7 +13,7 @@ Background:
 	Given the application in in test mode
 
 @PRTest
-Scenario: Redeem Vouchers
+Scenario: Redeem Vouchers - Key Entry
 	Given I am on the Login Screen
 
 	When I enter 'redemptionuser@testredemption1.co.uk' as the Email Address
@@ -28,7 +28,11 @@ Scenario: Redeem Vouchers
 
 	Given I tap on the Redeem Voucher button
 
-	Then the Voucher Redemption Page is displayed
+	Then the Voucher Code Entry Mode Page is displayed
+
+	Given I tap on the Key Entry button
+
+	Then the Key Entry Voucher Redemption Page is displayed
 
 	Given I enter the voucher code '0000000001' voucher
 
