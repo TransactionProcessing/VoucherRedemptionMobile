@@ -13,13 +13,21 @@
     using Common;
     using Database;
     using EstateManagement.Client;
+    using Java.Interop;
     using Microsoft.AppCenter.Distribute;
+    using Newtonsoft.Json;
     using SecurityService.Client;
+    using TestClients;
+    using TestClients.Models;
+    using Unity.Lifetime;
+    using VoucherRedemption.Clients;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.Android;
     using ZXing.Mobile;
     using Environment = System.Environment;
     using Platform = Xamarin.Essentials.Platform;
+    using Unity;
+    using Application = Android.App.Application;
 
     /// <summary>
     /// 

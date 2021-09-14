@@ -45,7 +45,7 @@
         /// <value>
         /// The trait.
         /// </value>
-        protected override String Trait => "VoucherRedemptionLabel";
+        protected override String Trait => "EnterVoucherCodeLabel";
             
         #endregion
 
