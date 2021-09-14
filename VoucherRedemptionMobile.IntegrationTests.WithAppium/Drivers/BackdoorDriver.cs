@@ -19,18 +19,6 @@
             await this.ExecuteBackdoor("SetIntegrationTestModeOn", "");
         }
 
-        //public async Task UpdateTestMerchant(Merchant merchant)
-        //{
-        //    String merchantData = JsonConvert.SerializeObject(merchant);
-        //    await this.ExecuteBackdoor("UpdateTestMerchant", merchantData);
-        //}
-
-        //public async Task UpdateTestContract(Contract contract)
-        //{
-        //    String contractData = JsonConvert.SerializeObject(contract);
-        //    await this.ExecuteBackdoor("UpdateTestContract", contractData);
-        //}
-
         public async Task AddTestVoucher(Voucher voucher)
         {
             String voucherData = JsonConvert.SerializeObject(voucher);

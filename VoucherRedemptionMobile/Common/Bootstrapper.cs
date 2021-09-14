@@ -112,6 +112,8 @@
 
             // Voucher
             container.RegisterType<IVoucherPage, VoucherPage>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionSelectVoucherEntryModePage, RedemptionSelectVoucherEntryMode>(new TransientLifetimeManager());
+            container.RegisterType<IRedemptionScanVoucherCodePage, RedemptionScanVoucherCodePage>(new TransientLifetimeManager());
             container.RegisterType<IRedemptionEnterVoucherCodePage, RedemptionEnterVoucherCodePage>(new TransientLifetimeManager());
             container.RegisterType<IRedemptionVoucherDetailsPage, RedemptionVoucherDetailsPage>(new TransientLifetimeManager());
             container.RegisterType<IRedemptionSuccessPage, RedemptionSuccessPage>(new TransientLifetimeManager());

@@ -36,10 +36,12 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         /// </summary>
         VouchersPage vouchersPage = new VouchersPage();
 
+        private VoucherCodeEntryModeSelectionPage voucherCodeEntryModeSelectionPage = new VoucherCodeEntryModeSelectionPage();
+
         /// <summary>
         /// The voucher redemption page
         /// </summary>
-        VoucherRedemptionPage voucherRedemptionPage = new VoucherRedemptionPage();
+        KeyEntryVoucherRedemptionPage keyEntryVoucherRedemptionPage = new KeyEntryVoucherRedemptionPage();
 
         /// <summary>
         /// The voucher details page
@@ -84,16 +86,16 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         /// <summary>
         /// Thens the voucher redemption page is displayed.
         /// </summary>
-        [Then(@"the Voucher Redemption Page is displayed")]
-        public async Task ThenTheVoucherRedemptionPageIsDisplayed()
+        [Then(@"the Key Entry Voucher Redemption Page is displayed")]
+        public async Task ThenTheKeyEntryVoucherRedemptionPageIsDisplayed()
         {
-            await this.voucherRedemptionPage.AssertOnPage();
+            await this.keyEntryVoucherRedemptionPage.AssertOnPage();
         }
 
         [Given(@"I enter the voucher code '(.*)' voucher")]
         public async Task GivenIEnterTheVoucherCodeVoucher(String voucherCode)
         {
-            await this.voucherRedemptionPage.EnterVoucherCode(voucherCode);
+            await this.keyEntryVoucherRedemptionPage.EnterVoucherCode(voucherCode);
         }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         [Given(@"I tap on the Find Voucher Button")]
         public async Task GivenITapOnTheFindVoucherButton()
         {
-            await this.voucherRedemptionPage.ClickFindVoucherButton();
+            await this.keyEntryVoucherRedemptionPage.ClickFindVoucherButton();
         }
 
         [Then(@"the voucher details are displayed for the voucher with code '(.*)'")]
@@ -131,6 +133,18 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         public async Task ThenTheVoucherRedemptionSuccessfulScreenWillBeDisplayed()
         {
             await this.voucherRedemptionSuccessPage.AssertOnPage();
+        }
+
+        [Then(@"the Voucher Code Entry Mode Page is displayed")]
+        public async Task ThenTheVoucherCodeEntryModePageIsDisplayed()
+        {
+            await this.voucherCodeEntryModeSelectionPage.AssertOnPage();
+        }
+
+        [Given(@"I tap on the Key Entry button")]
+        public async Task GivenITapOnTheKeyEntryButton()
+        {
+            await this.voucherCodeEntryModeSelectionPage.ClickKeyEntryButton();
         }
 
 

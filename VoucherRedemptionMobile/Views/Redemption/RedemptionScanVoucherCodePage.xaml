@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionEnterVoucherCodePage"
-             xmlns:controls="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
+             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionScanVoucherCodePage"
              xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:converters="clr-namespace:VoucherRedemptionMobile.Converters;assembly=VoucherRedemptionMobile">
+             xmlns:converters="clr-namespace:VoucherRedemptionMobile.Converters;assembly=VoucherRedemptionMobile"
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,30 +31,13 @@
                 HorizontalTextAlignment="Center"
                 Style="{StaticResource LabelStyle}"
                 Text="Voucher Redemption"
-                AutomationId="EnterVoucherCodeLabel"
+                AutomationId="ScanVoucherCodeLabel"
                 TextColor="{DynamicResource Gray-900}" />
-
-            <border:SfBorder
-                BackgroundColor="{DynamicResource Gray-White}"
-                BorderColor="{Binding Source={x:Reference VoucherCodeEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
-                Style="{StaticResource SfBorderStyle}">
-                <controls:BorderlessEntry
-                    x:Name="VoucherCodeEntry"
-                    Placeholder="Voucher Code"
-                    PlaceholderColor="{DynamicResource Gray-700}"
-                    Style="{StaticResource EntryStyle}"
-                    Text="{Binding VoucherCode}"
-                    TextColor="{DynamicResource Gray-900}"
-                    AutomationId="VoucherCodeEntry"
-                    Keyboard="Numeric"/>
-            </border:SfBorder>
-
-            <buttons:SfButton
-                x:Name="FindVoucherButton"
-                Margin="0,16"
-                Style="{DynamicResource VoucherButtonStyle}"
-                Text="Find Voucher"
-                AutomationId="FindVoucherButton"/>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <forms:ZXingScannerView x:Name="BarcodeScanView" HeightRequest="200" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                <forms:ZXingDefaultOverlay TopText="Hold your phone up to the barcode"
+                                           BottomText = "Scanning will happen automatically"></forms:ZXingDefaultOverlay>
+            </Grid>
 
             <buttons:SfButton
                 x:Name="CancelButton"
@@ -63,6 +45,8 @@
                 Style="{DynamicResource VoucherButtonStyle}"
                 Text="Cancel"
                 AutomationId="CancelButton"/>
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

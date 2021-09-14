@@ -1,13 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionEnterVoucherCodePage"
-             xmlns:controls="clr-namespace:VoucherRedemptionMobile.Controls;assembly=VoucherRedemptionMobile"
+             xmlns:converters="clr-namespace:VoucherRedemptionMobile.Converters;assembly=VoucherRedemptionMobile"
              xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:converters="clr-namespace:VoucherRedemptionMobile.Converters;assembly=VoucherRedemptionMobile">
-
+             x:Class="VoucherRedemptionMobile.Views.Redemption.RedemptionSelectVoucherEntryMode">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BooleanToColorConverter x:Key="ColorConverter" />
@@ -31,38 +28,23 @@
                 FontSize="20"
                 HorizontalTextAlignment="Center"
                 Style="{StaticResource LabelStyle}"
-                Text="Voucher Redemption"
-                AutomationId="EnterVoucherCodeLabel"
+                Text="Select Voucher Code Entry Mode"
+                AutomationId="VoucherCodeEntryModeSelectionLabel"
                 TextColor="{DynamicResource Gray-900}" />
 
-            <border:SfBorder
-                BackgroundColor="{DynamicResource Gray-White}"
-                BorderColor="{Binding Source={x:Reference VoucherCodeEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
-                Style="{StaticResource SfBorderStyle}">
-                <controls:BorderlessEntry
-                    x:Name="VoucherCodeEntry"
-                    Placeholder="Voucher Code"
-                    PlaceholderColor="{DynamicResource Gray-700}"
-                    Style="{StaticResource EntryStyle}"
-                    Text="{Binding VoucherCode}"
-                    TextColor="{DynamicResource Gray-900}"
-                    AutomationId="VoucherCodeEntry"
-                    Keyboard="Numeric"/>
-            </border:SfBorder>
-
             <buttons:SfButton
-                x:Name="FindVoucherButton"
+                x:Name="KeyEntryButton"
                 Margin="0,16"
                 Style="{DynamicResource VoucherButtonStyle}"
-                Text="Find Voucher"
-                AutomationId="FindVoucherButton"/>
+                Text="Key Entry"
+                AutomationId="KeyEntryButton"/>
 
             <buttons:SfButton
-                x:Name="CancelButton"
+                x:Name="ScanButton"
                 Margin="0,16"
                 Style="{DynamicResource VoucherButtonStyle}"
-                Text="Cancel"
-                AutomationId="CancelButton"/>
+                Text="Scan"
+                AutomationId="ScanButton"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
