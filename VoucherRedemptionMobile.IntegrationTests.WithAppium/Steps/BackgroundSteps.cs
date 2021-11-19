@@ -37,6 +37,20 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
             this.Backdoor.SetIntegrationModeOn().Wait();
         }
 
+        [Given(@"the following users exist")]
+        public async Task GivenTheFollowingUsersExist(Table table)
+        {
+            foreach (TableRow tableRow in table.Rows)
+            {
+                String emailAddress = SpecflowTableHelper.GetStringRowValue(tableRow, "EmailAddress");
+                String password = SpecflowTableHelper.GetStringRowValue(tableRow, "Password");
+
+                await this.Backdoor.AddUserDetails((emailAddress, password));
+                this.TestingContext.Users.Add((emailAddress, password));
+            }
+        }
+
+
         [Given(@"the following vouchers have been issued")]
         public async Task GivenTheFollowingVouchersHaveBeenIssued(Table table)
         {
@@ -86,11 +100,18 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
             {
                 await this.LoginPage.ClickTestModeButton();
 
-                var vouchers = this.TestingContext.Vouchers;
-                var voucherData = JsonConvert.SerializeObject(vouchers);
                 await this.TestModePage.EnterPin("1234");
 
+                var vouchers = this.TestingContext.Vouchers;
+                var voucherData = JsonConvert.SerializeObject(vouchers);
+
                 await this.TestModePage.EnterTestVoucherData(voucherData);
+
+                var usersList = this.TestingContext.Users;
+                var userData = JsonConvert.SerializeObject(usersList);
+
+                await this.TestModePage.EnterTestUserData(userData);
+
                 await this.TestModePage.ClickSetTestModeButton();
             }
         }

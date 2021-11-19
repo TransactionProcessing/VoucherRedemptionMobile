@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <Configurations>Debug;Release;GooglePlay;TestAutomation</Configurations>
   </PropertyGroup>
@@ -23,24 +23,20 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="EstateManagement.Client" Version="1.0.11.1" />
+    <PackageReference Include="EstateManagement.Client" Version="1.0.17-build83" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="4.0.0" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.1" />
-    <PackageReference Include="Moq" Version="4.15.2" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
     <PackageReference Include="SharpCompress" Version="0.29.0" />
     <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="SecurityService.Client" Version="1.0.6.4" />
+    <PackageReference Include="SecurityService.Client" Version="1.0.8" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.2.0.59" />
-    <PackageReference Include="TransactionProcessorACL.DataTransferObjects" Version="1.0.10.2" />
     <PackageReference Include="Unity" Version="5.11.10" />
-    <PackageReference Include="VoucherManagementACL.DataTransferObjects" Version="1.0.3.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.2.0.59" />

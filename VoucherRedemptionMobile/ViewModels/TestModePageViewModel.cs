@@ -11,6 +11,7 @@
 
         private string pinNumber;
 
+        private string testUserData;
         private string testVoucherData;
 
         public String PinNumber
@@ -23,6 +24,19 @@
             {
                 this.pinNumber = value;
                 this.OnPropertyChanged(nameof(this.PinNumber));
+            }
+        }
+
+        public String TestUserData
+        {
+            get
+            {
+                return this.testUserData;
+            }
+            set
+            {
+                this.testUserData = value;
+                this.OnPropertyChanged(nameof(this.TestUserData));
             }
         }
 

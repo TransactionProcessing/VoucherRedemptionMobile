@@ -7,12 +7,14 @@
     public class TestModePage : BasePage
     {
         private readonly String PinEntry;
+        private readonly String TestUserDataEntry;
         private readonly String TestVoucherDataEntry;
 
         private readonly String SetTestModeButton;
         public TestModePage()
         {
             this.PinEntry = "PinEntry";
+            this.TestUserDataEntry = "TestUserDataEntry";
             this.TestVoucherDataEntry = "TestVoucherDataEntry";
 
             this.SetTestModeButton = "SetTestModeButton";
@@ -24,7 +26,13 @@
             IWebElement element = await this.WaitForElementByAccessibilityId(this.PinEntry);
             element.SendKeys(pinNumber);
         }
-        
+
+        public async Task EnterTestUserData(String testUserData)
+        {
+            this.HideKeyboard();
+            IWebElement element = await this.WaitForElementByAccessibilityId(this.TestUserDataEntry);
+            element.SendKeys(testUserData);
+        }
 
         public async Task EnterTestVoucherData(String testVoucherData)
         {

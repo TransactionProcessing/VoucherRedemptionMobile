@@ -8,6 +8,8 @@
     using Java.Interop;
     using Java.Lang;
     using Newtonsoft.Json;
+    using Plugin.Toast;
+    using SecurityService.Client;
     using TestClients;
     using TestClients.Models;
     using Unity;
@@ -49,6 +51,17 @@
             }
         }
 
+        [Export("AddUserDetails")]
+        public void AddUserDetails(System.String userData)
+        {
+            if (App.IsIntegrationTestMode == true)
+            {
+                (System.String, System.String) user = JsonConvert.DeserializeObject<(System.String, System.String)>(userData.ToString());
+                TestSecurityServiceClient securityServiceClient = App.Container.Resolve<ISecurityServiceClient>() as TestSecurityServiceClient;
+
+                securityServiceClient.CreateUserDetails(user.Item1,user.Item2);
+            }
+        }
 
     }
 

@@ -20,8 +20,6 @@
     using SecurityService.DataTransferObjects.Responses;
     using TestClients;
     using TestClients.Models;
-    using TransactionProcessorACL.DataTransferObjects;
-    using TransactionProcessorACL.DataTransferObjects.Responses;
     using Unity;
     using Unity.Lifetime;
     using ViewModels;
@@ -156,10 +154,26 @@
 
             // Read the test data
             var testVoucherData = this.TestModePageViewModel.TestVoucherData;
-
+            var testUserData = this.TestModePageViewModel.TestUserData;
             UpdateTestVoucherData(testVoucherData);
 
+            CrossToastPopUp.Current.ShowToastMessage(testUserData.Length.ToString());
+            UpdateTestUserData(testUserData);
+
             await Application.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private void UpdateTestUserData(String userData)
+        {
+            List<(String,String)> users = JsonConvert.DeserializeObject<List< (String,String)>>(userData);
+            if (users.Any())
+            {
+                TestSecurityServiceClient securityServiceClient = App.Container.Resolve<ISecurityServiceClient>() as TestSecurityServiceClient;
+                foreach (var user in users)
+                {
+                    securityServiceClient.CreateUserDetails(user.Item1, user.Item2);
+                }
+            }
         }
 
         private void UpdateTestVoucherData(String voucherData)
@@ -220,8 +234,8 @@
             try
             {
                 ISecurityServiceClient securityServiceClient = App.Container.Resolve<ISecurityServiceClient>();
-                this.LoginViewModel.EmailAddress = "redemptionuser@healthcarecentre1.co.uk";
-                this.LoginViewModel.Password = "123456";
+                //this.LoginViewModel.EmailAddress = "redemptionuser@healthcarecentre1.co.uk";
+                //this.LoginViewModel.Password = "123456";
 
                 await this.Database.InsertLogMessage(DatabaseContext.CreateDebugLogMessage("About to Get Configuration"));
                 await this.GetConfiguration();

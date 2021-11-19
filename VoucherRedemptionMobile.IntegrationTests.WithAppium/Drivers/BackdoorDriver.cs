@@ -19,6 +19,12 @@
             await this.ExecuteBackdoor("SetIntegrationTestModeOn", "");
         }
 
+        public async Task AddUserDetails((String userName, String password) userDetails)
+        {
+            String userData = JsonConvert.SerializeObject(userDetails);
+            await this.ExecuteBackdoor("AddUserDetails", userData);
+        }
+
         public async Task AddTestVoucher(Voucher voucher)
         {
             String voucherData = JsonConvert.SerializeObject(voucher);

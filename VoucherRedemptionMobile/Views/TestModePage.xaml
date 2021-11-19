@@ -58,6 +58,19 @@
                         AutomationId="TestVoucherDataEntry"/>
                 </border:SfBorder>
 
+                <border:SfBorder
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    Style="{StaticResource SfBorderStyle}">
+                    <controls:BorderlessEntry
+                        x:Name="TestUserDataEntry"
+                        Placeholder="User Data"
+                        PlaceholderColor="{DynamicResource Gray-700}"
+                        Style="{StaticResource EntryStyle}"
+                        Text="{Binding TestUserData}"
+                        TextColor="{DynamicResource Gray-900}"
+                        AutomationId="TestUserDataEntry"/>
+                </border:SfBorder>
+
                 <buttons:SfButton
                     x:Name="SetTestModeButton"
                     Margin="0,16"
