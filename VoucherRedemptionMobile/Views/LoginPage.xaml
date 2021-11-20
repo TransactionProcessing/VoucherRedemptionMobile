@@ -61,9 +61,18 @@
                         AutomationId="LoginLabel"
                         TextColor="{DynamicResource Gray-900}" />
 
+                    <Button Text="TestMode" Grid.Row="1" x:Name="TestModeButton" AutomationId="TestModeButton" HeightRequest="1" WidthRequest="1">
+                        <Button.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="iOS">true</On>
+                                <On Platform="Android">true</On>
+                            </OnPlatform>
+                        </Button.IsVisible>
+                    </Button>
+
                     <!--  Label to display the description of this page  -->
                     <Label
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Margin="0,8"
                         FontFamily="{StaticResource Montserrat-Medium}"
                         HorizontalTextAlignment="Center"
@@ -73,7 +82,7 @@
 
                     <!--  Entry to get email ID from user  -->
                     <border:SfBorder
-                        Grid.Row="2"
+                        Grid.Row="3"
                         BackgroundColor="{DynamicResource Gray-White}"
                         BorderColor="{Binding Source={x:Reference EmailEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
                         Style="{StaticResource SfBorderStyle}">
@@ -89,7 +98,7 @@
 
                     <!--  Entry to get password from user  -->
                     <border:SfBorder
-                        Grid.Row="3"
+                        Grid.Row="4"
                         BackgroundColor="{DynamicResource Gray-White}"
                         BorderColor="{Binding Source={x:Reference PasswordEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
                         Style="{StaticResource SfBorderStyle}">
@@ -107,7 +116,7 @@
                     <!--  Forgot password link  -->
                     <Label
                         x:Name="ForgotPasswordLabel"
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Margin="0,16"
                         FontFamily="{StaticResource Montserrat-SemiBold}"
                         FontSize="12"
@@ -122,7 +131,7 @@
                     <!--  Login button  -->
                     <buttons:SfButton
                         x:Name="LoginButton"
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Margin="0,16"
                         Style="{StaticResource SfButtonStyle}"
                         Text="LOG IN"
@@ -130,20 +139,13 @@
 
                     <buttons:SfButton
                         x:Name="SupportButton"
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Margin="0,16"
                         Style="{StaticResource SfButtonStyleSmall}"
                         Text="Support"
                         AutomationId="SupportButton"/>
 
-                    <Button Text="TestMode" Grid.Row="7" x:Name="TestModeButton" AutomationId="TestModeButton" HeightRequest="1" WidthRequest="1">
-                        <Button.IsVisible>
-                            <OnPlatform x:TypeArguments="x:Boolean">
-                                <On Platform="iOS">true</On>
-                                <On Platform="Android">true</On>
-                            </OnPlatform>
-                        </Button.IsVisible>
-                    </Button>
+                    
                 </Grid>
 
             </StackLayout>
