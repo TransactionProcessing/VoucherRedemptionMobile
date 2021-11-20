@@ -19,7 +19,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
 
         public static IOSDriver<IOSElement> iOSDriver;
 
-        private static Boolean UseInternalAppiumService = false;
+        private static Boolean UseInternalAppiumService = true;
 
         public AppiumDriver()
         {
@@ -83,6 +83,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", "..", @"VoucherRedemptionMobile.iOS/bin/iPhoneSimulator/Release");
                 var apkPath = Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.App, apkPath);
+                //driverOptions.AddAdditionalCapability("bundleId", "com.companyname.VoucherRedemptionMobile");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.NoReset, true);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, "XCUITest");
                 driverOptions.AddAdditionalCapability("useNewWDA", true);
