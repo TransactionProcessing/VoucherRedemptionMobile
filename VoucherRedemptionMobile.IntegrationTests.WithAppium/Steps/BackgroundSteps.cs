@@ -100,21 +100,32 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
         {
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
             {
-                await this.LoginPage.ClickTestModeButton();
-
-                await this.TestModePage.EnterPin("1234");
-
-                var vouchers = this.TestingContext.Vouchers;
-                var voucherData = JsonConvert.SerializeObject(vouchers);
-                voucherData = StringCompression.Compress(voucherData);
-                await this.TestModePage.EnterTestVoucherData(voucherData);
-
-                var usersList = this.TestingContext.Users;
-                var userData = JsonConvert.SerializeObject(usersList);
-                userData = StringCompression.Compress(userData);
-                await this.TestModePage.EnterTestUserData(userData);
-
-                await this.TestModePage.ClickSetTestModeButton();
+                String stage = null;
+                try
+                {
+                    stage = "1";
+                    await this.LoginPage.ClickTestModeButton();
+                    stage = "2";
+                    await this.TestModePage.AssertOnPage();
+                    stage = "3";
+                    await this.TestModePage.EnterPin("1234");
+                    stage = "4";
+                    var vouchers = this.TestingContext.Vouchers;
+                    var voucherData = JsonConvert.SerializeObject(vouchers);
+                    voucherData = StringCompression.Compress(voucherData);
+                    await this.TestModePage.EnterTestVoucherData(voucherData);
+                    stage = "5";
+                    var usersList = this.TestingContext.Users;
+                    var userData = JsonConvert.SerializeObject(usersList);
+                    userData = StringCompression.Compress(userData);
+                    await this.TestModePage.EnterTestUserData(userData);
+                    stage = "6";
+                    await this.TestModePage.ClickSetTestModeButton();
+                }
+                catch(Exception e)
+                {
+                    throw new Exception($"Failed to find element. Stage {stage}. Source [{AppiumDriver.iOSDriver.PageSource}]");
+                }
             }
         }
     }

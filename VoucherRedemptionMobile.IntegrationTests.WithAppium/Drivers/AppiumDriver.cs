@@ -19,7 +19,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
 
         public static IOSDriver<IOSElement> iOSDriver;
 
-        private static Boolean UseInternalAppiumService = true;
+        private static Boolean UseInternalAppiumService = false;
 
         public AppiumDriver()
         {
@@ -77,7 +77,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 var driverOptions = new AppiumOptions();
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformName, "iOS");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone 11");
-                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "14.4");
+                driverOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "15.0");
 
                 String assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 String binariesFolder = Path.Combine(assemblyFolder, "..", "..", "..", "..", @"VoucherRedemptionMobile.iOS/bin/iPhoneSimulator/Release");
@@ -96,7 +96,14 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 //driverOptions.AddAdditionalCapability("unicodeKeyboard", true);
                 //driverOptions.AddAdditionalCapability("resetKeyboard", true);
 
-                AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
+                if (AppiumDriver.UseInternalAppiumService == true)
+                {
+                    AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
+                }
+                else
+                {
+                    AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(new Uri("http://192.168.213.128:4723/wd/hub"), driverOptions, TimeSpan.FromMinutes(5));
+                }
             }
         }
 
