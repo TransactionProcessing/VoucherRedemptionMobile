@@ -90,12 +90,6 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability("wdaLaunchTimeout", 999999999);
                 driverOptions.AddAdditionalCapability("wdaConnectionTimeout", 999999999);
                 driverOptions.AddAdditionalCapability("restart", true);
-                //driverOptions.AddAdditionalCapability("wdaStartupRetries", "10");
-                //driverOptions.AddAdditionalCapability("iosInstallPause", "8000");
-                //driverOptions.AddAdditionalCapability("wdaStartupRetryInterval", "20000");
-                //driverOptions.AddAdditionalCapability("showXcodeLog", true);
-                //driverOptions.AddAdditionalCapability("unicodeKeyboard", true);
-                //driverOptions.AddAdditionalCapability("resetKeyboard", true);
 
                 if (AppiumDriver.UseInternalAppiumService == true)
                 {

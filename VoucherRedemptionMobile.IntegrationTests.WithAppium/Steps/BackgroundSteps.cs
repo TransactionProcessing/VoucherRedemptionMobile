@@ -103,6 +103,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Steps
                 String stage = null;
                 try
                 {
+                    await this.LoginPage.AssertOnPage();
                     stage = "1";
                     await this.LoginPage.ClickTestModeButton();
                     stage = "2";
