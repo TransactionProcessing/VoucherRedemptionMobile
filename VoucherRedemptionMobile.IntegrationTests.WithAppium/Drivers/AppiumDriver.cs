@@ -19,8 +19,6 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
 
         public static IOSDriver<IOSElement> iOSDriver;
 
-        private static Boolean UseInternalAppiumService = true;
-
         public AppiumDriver()
         {
         }
@@ -28,20 +26,12 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
         public void StartApp()
         {
             AppiumLocalService appiumService = null;
-            if (AppiumDriver.UseInternalAppiumService == true)
+            appiumService = new AppiumServiceBuilder().UsingPort(4723).Build();
+
+            if (appiumService.IsRunning == false)
             {
-                appiumService = new AppiumServiceBuilder().UsingPort(4723).Build();
-
-                if (appiumService.IsRunning == false)
-                {
-                    appiumService.Start();
-
-                    //Console.WriteLine($"appiumService.IsRunning - {appiumService.IsRunning}");
-                }
-
-                appiumService.OutputDataReceived += AppiumService_OutputDataReceived;
+                appiumService.Start();
             }
-
 
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)
             {
@@ -62,14 +52,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 driverOptions.AddAdditionalCapability("espressoBuildConfig",
                                                       "{ \"additionalAppDependencies\": [ \"com.google.android.material:material:1.0.0\", \"androidx.lifecycle:lifecycle-extensions:2.1.0\" ] }");
 
-                if (AppiumDriver.UseInternalAppiumService == true)
-                {
-                    AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
-                }
-                else
-                {
-                    AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(new Uri("http://127.0.0.1:4723/wd/hub"), driverOptions, TimeSpan.FromMinutes(5));
-                }
+                AppiumDriver.AndroidDriver = new AndroidDriver<AndroidElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
             }
 
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.iOS)
@@ -84,29 +67,17 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 var apkPath = Path.Combine(binariesFolder, "VoucherRedemptionMobile.iOS.app");
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.App, apkPath);
                 //driverOptions.AddAdditionalCapability("bundleId", "com.companyname.VoucherRedemptionMobile");
-                driverOptions.AddAdditionalCapability(MobileCapabilityType.NoReset, true);
+                driverOptions.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
                 driverOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, "XCUITest");
                 driverOptions.AddAdditionalCapability("useNewWDA", true);
                 driverOptions.AddAdditionalCapability("wdaLaunchTimeout", 999999999);
                 driverOptions.AddAdditionalCapability("wdaConnectionTimeout", 999999999);
                 driverOptions.AddAdditionalCapability("restart", true);
 
-                if (AppiumDriver.UseInternalAppiumService == true)
-                {
-                    AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
-                }
-                else
-                {
-                    AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(new Uri("http://192.168.213.128:4723/wd/hub"), driverOptions, TimeSpan.FromMinutes(5));
-                }
+                AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
             }
         }
-
-        private void AppiumService_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
-        {
-            //Console.WriteLine(e.Data);
-        }
-
+        
         public void StopApp()
         {
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)

@@ -11,6 +11,7 @@
     <PackageReference Include="Appium.WebDriver" Version="4.3.1" />
     <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.9.22" />
 	<PackageReference Include="Shouldly" Version="4.0.3" />
+	<PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.22" />
   </ItemGroup>
 
   <ItemGroup>
