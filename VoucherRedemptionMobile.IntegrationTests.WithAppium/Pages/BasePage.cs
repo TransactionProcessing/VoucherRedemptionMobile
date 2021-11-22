@@ -25,7 +25,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Pages
 
                 Should.NotThrow(() => this.WaitForElementByAccessibilityId(this.Trait), message);
             },
-                            TimeSpan.FromMinutes(1),
+                            TimeSpan.FromMinutes(5),
                             timeout).ConfigureAwait(false);
 
         }
