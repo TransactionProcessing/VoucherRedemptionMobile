@@ -23,6 +23,8 @@ jobs:
     - run: sdkmanager "build-tools;30.0.2"
     - run: adb devices
 
+    - name: Set Up Variables
+      run: echo "action_url=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
 
     - name: Set up Appium
       run: |
@@ -60,3 +62,12 @@ jobs:
       with:
         name: screenshots
         path: /Users/runner/screenshots/**/*
+
+    - uses: nashmaniac/create-issue-action@v1.1
+      if: ${{ failure() }}
+      name: Create an issue on build failure
+      with:
+        title: Investigate Nightly Build Failure
+        token: ${{secrets.GITHUB_TOKEN}}
+        labels: nightlybuild
+        body: Url is ${{env.action_url}}
