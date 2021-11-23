@@ -39,9 +39,9 @@ namespace VoucherRedemptionMobile.TestClients
     {
         private List<(UserDetails userDetails, String password)> Users = new List<(UserDetails userDetails, String password)>();
 
-        private (UserDetails userDetails, String password) CreateUserDetails(String userName, String password = "123456")
+        public (UserDetails userDetails, String password) CreateUserDetails(String userName, String password = "123456")
         {
-            return (new UserDetails
+            var userDetails = new UserDetails
                     {
                         Claims = new Dictionary<String, String>(),
                         EmailAddress =userName,
@@ -49,12 +49,11 @@ namespace VoucherRedemptionMobile.TestClients
                         Roles = new List<String>(),
                         UserId = Guid.NewGuid(),
                         UserName = userName
-                    }, password);
+                    };
+            this.Users.Add((userDetails, password));
+
+            return (userDetails, password);
         }
-        public TestSecurityServiceClient()
-        {
-            this.Users.Add(CreateUserDetails("redemptionuser@testredemption1.co.uk"));
-    }
 
         public async Task<TokenResponse> GetToken(String username,
                                                   String password,
@@ -65,7 +64,7 @@ namespace VoucherRedemptionMobile.TestClients
             (UserDetails userDetails, String password) user = this.Users.SingleOrDefault(u => u.userDetails.EmailAddress == username && u.password == password);
             if (user.userDetails == null)
             {
-                // TODO: thrown an error
+                throw new Exception($"User {username} not found");
             }
             return TokenResponse.Create("token", null, 0, DateTimeOffset.Now);
         }

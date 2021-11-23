@@ -10,6 +10,10 @@ Background:
 	| 0000000003  | 10.00        |                                | 123456789       |
 	| 0000000004  | 20.00        |                                | 123456788       |
 
+	Given the following users exist
+	| EmailAddress                         | Password |
+	| redemptionuser@testredemption1.co.uk | 123456   |
+
 	Given the application in in test mode
 
 @PRTest	

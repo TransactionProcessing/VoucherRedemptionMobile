@@ -86,35 +86,44 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Features
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "VoucherCode",
                         "VoucherValue",
                         "RecipientEmail",
                         "RecipientMobile"});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "0000000001",
                         "10.00",
                         "testrecipient1@recipient.co.uk",
                         ""});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "0000000002",
                         "20.00",
                         "testrecipient2@recipient.co.uk",
                         ""});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "0000000003",
                         "10.00",
                         "",
                         "123456789"});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "0000000004",
                         "20.00",
                         "",
                         "123456788"});
 #line 6
- testRunner.Given("the following vouchers have been issued", ((string)(null)), table2, "Given ");
+ testRunner.Given("the following vouchers have been issued", ((string)(null)), table3, "Given ");
 #line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "EmailAddress",
+                        "Password"});
+            table4.AddRow(new string[] {
+                        "redemptionuser@testredemption1.co.uk",
+                        "123456"});
 #line 13
+ testRunner.Given("the following users exist", ((string)(null)), table4, "Given ");
+#line hidden
+#line 17
  testRunner.Given("the application in in test mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
@@ -128,7 +137,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Features
                     "PRTest"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Redeem Vouchers - Key Entry", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 16
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -151,52 +160,52 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-#line 17
+#line 21
  testRunner.Given("I am on the Login Screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 19
+#line 23
  testRunner.When("I enter \'redemptionuser@testredemption1.co.uk\' as the Email Address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 24
  testRunner.And("I enter \'123456\' as the Password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 25
  testRunner.And("I tap on Login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 27
  testRunner.Then("the Home Page is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 25
+#line 29
  testRunner.Given("I tap on the Vouchers button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 31
  testRunner.Then("the Vouchers Page is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 29
+#line 33
  testRunner.Given("I tap on the Redeem Voucher button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 31
+#line 35
  testRunner.Then("the Voucher Code Entry Mode Page is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 33
+#line 37
  testRunner.Given("I tap on the Key Entry button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 35
+#line 39
  testRunner.Then("the Key Entry Voucher Redemption Page is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 37
+#line 41
  testRunner.Given("I enter the voucher code \'0000000001\' voucher", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 39
+#line 43
  testRunner.And("I tap on the Find Voucher Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 41
+#line 45
  testRunner.Then("the voucher details are displayed for the voucher with code \'0000000001\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 43
+#line 47
  testRunner.When("I tap on the Redeem Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 45
+#line 49
  testRunner.Then("The Voucher Redemption Successful Screen will be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

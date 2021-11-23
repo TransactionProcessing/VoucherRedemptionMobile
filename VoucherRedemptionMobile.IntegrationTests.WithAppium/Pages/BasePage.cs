@@ -21,11 +21,11 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Pages
 
             await Retry.For(async () =>
             {
-                String message = "Unable to verify on page: " + this.GetType().Name;
+                String message = "Unable to verify on page: " + this.GetType().Name + $"Source [{await this.GetPageSource()}]";
 
                 Should.NotThrow(() => this.WaitForElementByAccessibilityId(this.Trait), message);
             },
-                            TimeSpan.FromMinutes(1),
+                            TimeSpan.FromMinutes(5),
                             timeout).ConfigureAwait(false);
 
         }
