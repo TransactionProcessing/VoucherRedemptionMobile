@@ -27,7 +27,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
         {
             AppiumLocalService appiumService = null;
             appiumService = new AppiumServiceBuilder().UsingPort(4723).Build();
-
+            appiumService.OutputDataReceived += AppiumService_OutputDataReceived;
             if (appiumService.IsRunning == false)
             {
                 appiumService.Start();
@@ -77,7 +77,12 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Drivers
                 AppiumDriver.iOSDriver = new IOSDriver<IOSElement>(appiumService, driverOptions, TimeSpan.FromMinutes(5));
             }
         }
-        
+
+        private void AppiumService_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            Console.WriteLine(e.Data);
+        }
+
         public void StopApp()
         {
             if (AppiumDriver.MobileTestPlatform == MobileTestPlatform.Android)
