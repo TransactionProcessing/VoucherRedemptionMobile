@@ -21,7 +21,7 @@ namespace VoucherRedemptionMobile.IntegrationTests.WithAppium.Pages
 
             await Retry.For(async () =>
             {
-                String message = "Unable to verify on page: " + this.GetType().Name + $"Source [{this.GetPageSource()}]";
+                String message = "Unable to verify on page: " + this.GetType().Name + $"Source [{await this.GetPageSource()}]";
 
                 Should.NotThrow(() => this.WaitForElementByAccessibilityId(this.Trait), message);
             },
