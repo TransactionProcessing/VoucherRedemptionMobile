@@ -160,7 +160,7 @@
             var testUserData = this.TestModePageViewModel.TestUserData;
             UpdateTestVoucherData(testVoucherData);
 
-            CrossToastPopUp.Current.ShowToastMessage(testUserData.Length.ToString());
+            //CrossToastPopUp.Current.ShowToastMessage(testUserData.Length.ToString());
             UpdateTestUserData(testUserData);
 
             await Application.Current.MainPage.Navigation.PopAsync();
