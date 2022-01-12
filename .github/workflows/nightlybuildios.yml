@@ -48,7 +48,7 @@ jobs:
     - name: Run Integration Tests - iOS
       run: dotnet test VoucherRedemptionMobile.IntegrationTests.WithAppium/VoucherRedemptionMobile.IntegrationTests.WithAppium.csproj --filter "Category=iOS"
 
-    - uses: nashmaniac/create-issue-action@v1.1
+    - uses: maxkomarychev/oction-create-issue@v0.7.1
       if: ${{ failure() }}
       name: Create an issue on build failure
       with:
